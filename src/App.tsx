@@ -1,13 +1,11 @@
 import React from 'react';
 import './App.css';
-import SearchBar from './SearchBar';
-import SearchButton from './SearchButton';
+import Search from './Search';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <SearchBar />
-      <SearchButton> Search OSU -></SearchButton>
+      <Search />
     </div>
   );
 }
