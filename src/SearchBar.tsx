@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Div = styled.div``;
-const Input = styled.input``;
-const Span = styled.span``;
+const SearchBarWrapper = styled.div``;
+const SearchBarField = styled.input``;
+const SearchBarIcon = styled.span``;
 
 const SearchBar: React.FC = () => {
   return (
-    <Div>
-      <Input type="text" placeholder="Search" />
-      <Span>Icon</Span>
-    </Div>
+    <SearchBarWrapper>
+      <SearchBarField type="text" placeholder="Search" />
+      <SearchBarIcon>Icon</SearchBarIcon>
+    </SearchBarWrapper>
   );
 };
 
