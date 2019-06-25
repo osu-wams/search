@@ -5,7 +5,10 @@ import StyledButton from "./StyledButton";
 const Search: React.FC = () => {
   const [query, setQuery] = useState("");
 
-  const setUrl = () => (window.location.search = "?q=" + query);
+  const setUrl = (e: any) => {
+    e.preventDefault();
+    window.location.search = "?q=" + query;
+  };
 
   return (
     <form onSubmit={setUrl}>

@@ -5,10 +5,16 @@ const SearchBarWrapper = styled.div``;
 const SearchBarField = styled.input``;
 const SearchBarIcon = styled.span``;
 
-const SearchBar: React.FC = setQuery => {
+const SearchBar = (prop: any) => {
   return (
     <SearchBarWrapper>
-      <SearchBarField type="text" placeholder="Search" onChange={setQuery} />
+      <SearchBarField
+        type="text"
+        placeholder="Search"
+        onChange={e => {
+          prop.setQuery(e.target.value);
+        }}
+      />
       <SearchBarIcon>Icon</SearchBarIcon>
     </SearchBarWrapper>
   );
