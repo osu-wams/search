@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import "./App.css";
 import Search from "./Search";
+import Results from './Results';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -13,10 +13,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Search />
-      <div
-        className="gcse-searchresults-only"
-        data-personalizedads="false"
-      ></div>
+      <Results />
     </div>
   );
 };
