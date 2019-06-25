@@ -1,14 +1,18 @@
-import React from 'react';
-import SearchBar from './SearchBar';
-import SearchButton from './SearchButton';
+import React, { useState, useEffect } from "react";
+import SearchBar from "./SearchBar";
+import StyledButton from "./StyledButton";
 
 const Search: React.FC = () => {
+  const [query, setQuery] = useState("");
+
+  const setUrl = () => (window.location.search = "?q=" + query);
+
   return (
-    <>
-      <SearchBar />
-      <SearchButton> Search OSU -></SearchButton>
-    </>
+    <form onSubmit={setUrl}>
+      <SearchBar setQuery={setQuery} />
+      <StyledButton type="submit">Search OSU -></StyledButton>
+    </form>
   );
-}
+};
 
 export default Search;
