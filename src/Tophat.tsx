@@ -10,14 +10,18 @@ const TophatWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 1em;
+  padding: 20px;
   @media screen and (max-width: ${breakpoints[768]}) {
     justify-content: space-between;
   } 
 `
 
 const TophatLogo = styled.img`
-  height: 50px;
+  height: 100%;
+`
+
+const StyledLink = styled.a`
+  height: 44px;
 `
 
 const urls = {
@@ -39,9 +43,9 @@ const Tophat = (prop: any) => {
 
   return (
     <TophatWrapper id="tophat-wrapper">
-      <a href="https://oregonstate.edu/">
+      <StyledLink href="https://oregonstate.edu/">
         <TophatLogo src={logo} />
-      </a>
+      </StyledLink>
       <Media query={`(max-width: ${breakpoints[768]})`}>
         {
           matches => matches ? (
