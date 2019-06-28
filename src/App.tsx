@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Search from './Search';
+import Search from './search/Search';
 import Results from './Results';
-import Tophat from './Tophat';
+import Tophat from './tophat/Tophat';
 import { Color, breakpoints } from './theme';
 import backgroundImage from './assets/images/Lester_060517_0205.jpg';
 

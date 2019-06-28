@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Media from 'react-media';
-import logo from './assets/images/logo.png';
-import { Color, breakpoints } from './theme';
+import logo from '../assets/images/logo.png';
+import { Color, breakpoints } from '../theme';
 import DesktopMenu from './TophatDesktopMenu';
 import HamburgerMenu from './TophatHamburgerMenu';
 

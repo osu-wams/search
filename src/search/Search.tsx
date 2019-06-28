@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
-import StyledButton from './StyledButton';
-import Icon from './Icon';
-import { Color, breakpoints, theme } from './theme';
+import StyledButton from '../StyledButton';
+import Icon from '../Icon';
+import { Color, breakpoints, theme } from '../theme';
 
 const SearchText = styled.h2`
   font-weight: 700;

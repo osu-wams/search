@@ -1,14 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Color, theme } from './theme';
+import { Color, theme } from '../theme';
 
 const StyledMenu = styled.nav`
-  /*
-  display: grid;
-  margin-left: 5em;
-  grid-column-gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
-  */
   display: flex;
   justify-content: space-evenly;
 `;

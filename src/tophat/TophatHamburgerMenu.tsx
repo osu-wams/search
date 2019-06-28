@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { faBars, faTimes } from '@fortawesome/pro-light-svg-icons';
 import { Menu, MenuButton, MenuList, MenuLink } from '@reach/menu-button';
-import { Color, theme } from './theme';
-import Icon from './Icon';
+import { Color, theme } from '../theme';
+import Icon from '../Icon';
 
 const StyledMenuButton = styled(MenuButton)`
   border: none;
