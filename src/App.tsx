@@ -1,8 +1,8 @@
-import React from "react";
-import "./App.css";
-import Search from "./Search";
-import Results from "./Results";
-import Tophat from './Tophat'
+import React from 'react';
+import './App.css';
+import Search from './Search';
+import Results from './Results';
+import Tophat from './Tophat';
 
 const App: React.FC = () => {
   return (
