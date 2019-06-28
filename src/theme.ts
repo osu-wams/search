@@ -58,13 +58,16 @@ export const theme = {
   },
   borderRadius: '8px',
   fontSize: {
+    '11': '1.1rem',
     '12': '1.2rem',
     '14': '1.4rem',
     '15': '1.5rem',
     '16': '1.6rem',
     '18': '1.8rem',
     '20': '2.0rem',
-    '24': '2.4rem'
+    '24': '2.4rem',
+    '28': '2.8rem',
+    '48': '4.8rem'
   }
 };
 
