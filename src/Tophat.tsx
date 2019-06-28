@@ -2,16 +2,19 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Media from 'react-media';
 import logo from './assets/images/logo.png';
-import { breakpoints } from './theme';
+import { Color, breakpoints } from './theme';
 import DesktopMenu from './TophatDesktopMenu';
 import HamburgerMenu from './TophatHamburgerMenu';
 
-const TophatWrapper = styled.div`
+const TophatWrapper = styled.header`
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 20px;
   justify-content: space-between;
+  background-color: ${Color.white};
   @media screen and (min-width: ${breakpoints[768]}) {
     justify-content: flex-start;
   }
@@ -23,6 +26,7 @@ const TophatLogo = styled.img`
 
 const StyledLink = styled.a`
   height: 44px;
+  margin-right: 36px;
 `;
 
 const urls = {

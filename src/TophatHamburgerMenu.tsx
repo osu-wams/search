@@ -21,6 +21,7 @@ const StyledMenuList = styled(MenuList)`
   left: 0;
   right: 0;
   top: ${props => props.pos}px;
+  bottom: 0;
 `;
 
 const StyledMenuLink = styled(MenuLink)`

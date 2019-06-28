@@ -35,9 +35,7 @@ const SearchBarField = styled.input`
   background-color: transparent;
   border: 0;
   padding: 0;
-  @media screen and (min-width: ${breakpoints[768]}) {
-    width: calc(100% - ${3 * (theme.spacing.unit * 3) + 24}px);
-  }
+  width: calc(100% - ${3 * (theme.spacing.unit * 3) + 24}px);
 `;
 
 const SearchBarIcon = styled(Icon)`

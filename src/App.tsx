@@ -36,8 +36,8 @@ const Content = styled.div`
 const App: React.FC = () => {
   return (
     <Page className="App">
+      <Tophat />
       <Content>
-        <Tophat />
         <Search />
         <Results />
       </Content>
