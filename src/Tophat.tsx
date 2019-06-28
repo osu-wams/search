@@ -11,8 +11,9 @@ const TophatWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 20px;
-  @media screen and (max-width: ${breakpoints[768]}) {
-    justify-content: space-between;
+  justify-content: space-between;
+  @media screen and (min-width: ${breakpoints[768]}) {
+    justify-content: flex-start;
   }
 `;
 
@@ -46,9 +47,9 @@ const Tophat = () => {
       <StyledLink href="https://oregonstate.edu/">
         <TophatLogo src={logo} />
       </StyledLink>
-      <Media query={`(max-width: ${breakpoints[768]})`}>
+      <Media query={`(min-width: ${breakpoints[768]})`}>
         {matches =>
-          matches ? <HamburgerMenu items={urls} pos={height} /> : <DesktopMenu items={urls} />
+          matches ? <DesktopMenu items={urls} /> : <HamburgerMenu items={urls} pos={height} />
         }
       </Media>
     </TophatWrapper>
