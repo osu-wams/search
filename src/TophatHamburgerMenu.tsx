@@ -14,7 +14,6 @@ const StyledMenuList = styled(MenuList)`
   display: flex;
   flex-direction: column;
   background-color: ${Color['white']};
-  padding: 1em;
   position: absolute;
   margin-left: auto;
   margin-right: auto;
@@ -22,6 +21,7 @@ const StyledMenuList = styled(MenuList)`
   right: 0;
   top: ${props => props.pos}px;
   bottom: 0;
+  padding: 0px ${theme.spacing.unit * 4}px;
 `;
 
 const StyledMenuLink = styled(MenuLink)`
@@ -31,6 +31,7 @@ const StyledMenuLink = styled(MenuLink)`
   color: ${Color['neutral-600']};
   font-size: ${theme.fontSize['24']};
   text-decoration: none;
+  padding: ${theme.spacing.unit * 2}px;
 `;
 
 const StyledIcon = styled(Icon)`

@@ -7,6 +7,7 @@ import DesktopMenu from './TophatDesktopMenu';
 import HamburgerMenu from './TophatHamburgerMenu';
 
 const TophatWrapper = styled.header`
+  z-index: 1;
   box-sizing: border-box;
   width: 100%;
   display: flex;
