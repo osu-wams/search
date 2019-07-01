@@ -46,14 +46,25 @@ const SearchBarIcon = styled(Icon)`
 `;
 
 const SearchBarLabel = styled.label`
+  @keyframes search-active {
+    99% {
+      background-color: transparent;
+      color: ${Color['neutral-550']};
+    }
+    100% {
+      background-color: ${Color['orange-400']};
+      color: ${Color.white};
+    }
+  }
   color: ${Color['neutral-550']};
   font-size: ${theme.fontSize[24]};
   position: absolute;
   left: ${theme.spacing.unit * 3}px;
-  bottom: ${(60 - (24 + 24 / 2)) / 2}px;
+  top: ${(60 - (24 + 24 / 2)) / 2}px;
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) 100ms;
   &.notEmpty,
   &.focused {
-    color: ${Color.white};
+    /* color is set in the keyframe */
     font-size: ${theme.fontSize[11]};
     top: -${(11 + 11 / 2) / 2 + 1}px;
     bottom: auto;
@@ -62,13 +73,18 @@ const SearchBarLabel = styled.label`
   }
   &.notEmpty {
     background-color: ${Color['neutral-400']};
+    color: ${Color.white};
   }
   &.notEmpty.hovered {
     background-color: ${Color['neutral-500']};
+    color: ${Color.white};
   }
   &.notEmpty.focused,
   &.focused {
-    background-color: ${Color['orange-400']};
+    /* background-color is set in the keyframe */
+    animation: search-active 100ms forwards;
+    transform-origin: top left;
+    transition: all cubic-bezier(0.4, 0, 0.2, 1) 100ms;
   }
 `;
 
@@ -100,8 +116,8 @@ const SearchBar = (prop: any) => {
             setEmpty(true);
           } else {
             setEmpty(false);
-            prop.setQuery(e.target.value);
           }
+          prop.setQuery(e.target.value);
         }}
       />
       <SearchBarIcon icon={faSearch} color={Color['neutral-550']} />

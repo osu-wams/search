@@ -23,7 +23,9 @@ const Search: React.FC = () => {
 
   const setUrl = (e: any) => {
     e.preventDefault();
-    window.location.search = '?q=' + query;
+    if (query !== '') {
+      window.location.search = '?q=' + query;
+    }
   };
 
   return (
