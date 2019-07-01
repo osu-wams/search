@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Color, breakpoints, theme } from './theme';
+import { Color, breakpoints, theme } from '../theme';
 
 const StyledButton = styled.button`
   background-color: ${Color['orange-400']};
@@ -10,6 +10,10 @@ const StyledButton = styled.button`
   font-size: ${theme.fontSize[18]};
   padding: ${theme.spacing.unit}px ${theme.spacing.unit * 2}px;
   margin-top: ${theme.spacing.unit * 2}px;
+  cursor: pointer;
+  &:active, &:focus, &:hover {
+    background-color: ${Color["neutral-550"]};
+  }
   & > svg {
     margin-left: ${theme.spacing.unit * 2}px;
   }

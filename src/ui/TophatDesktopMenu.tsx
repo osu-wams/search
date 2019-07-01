@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Color, theme } from './theme';
+import { Color, theme } from '../theme';
 
 const StyledMenu = styled.nav`
   /*
@@ -27,7 +27,7 @@ const TophatDesktopMenu = (prop: any) => {
   return (
     <StyledMenu>
       {Object.keys(prop.items).map(key => {
-        return <MenuLink href={prop.items[`${key}`]}>{key}</MenuLink>;
+        return <MenuLink key={key} href={prop.items[`${key}`]}>{key}</MenuLink>;
       })}
     </StyledMenu>
   );

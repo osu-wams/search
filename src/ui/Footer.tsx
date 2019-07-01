@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Color, theme } from './theme';
+import { Color, theme } from '../theme';
 
 const FooterWrapper = styled.div`
-  box-sizing: border-box;
   background-color: ${Color.black};
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  padding: 1.6rem;
 `;
 
 const FooterNote = styled.p`

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
-import { Color, breakpoints, theme } from './theme';
+import { Color, breakpoints, theme } from '../theme';
 
 const SearchBarWrapper = styled.div`
   box-sizing: border-box;

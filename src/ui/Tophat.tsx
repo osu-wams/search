@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Media from 'react-media';
-import logo from './assets/images/logo.png';
-import { Color, breakpoints } from './theme';
+import logo from '../assets/images/logo.png';
+import { Color, breakpoints } from '../theme';
 import DesktopMenu from './TophatDesktopMenu';
 import HamburgerMenu from './TophatHamburgerMenu';
 
@@ -13,7 +13,7 @@ const TophatWrapper = styled.header`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 20px;
+  padding: 2rem;
   justify-content: space-between;
   background-color: ${Color.white};
   @media screen and (min-width: ${breakpoints[768]}) {
@@ -26,8 +26,8 @@ const TophatLogo = styled.img`
 `;
 
 const StyledLink = styled.a`
-  height: 44px;
-  margin-right: 36px;
+  height: 4.4rem;
+  margin-right: 3.6rem;
 `;
 
 const urls = {
@@ -40,13 +40,6 @@ const urls = {
 };
 
 const Tophat = () => {
-  const [height, setHeight] = useState();
-
-  useEffect(() => {
-    const header = document.getElementById('tophat-wrapper');
-    if (header) setHeight(header.clientHeight);
-  }, []);
-
   return (
     <TophatWrapper id="tophat-wrapper">
       <StyledLink href="https://oregonstate.edu/">
@@ -54,7 +47,7 @@ const Tophat = () => {
       </StyledLink>
       <Media query={`(min-width: ${breakpoints[768]})`}>
         {matches =>
-          matches ? <DesktopMenu items={urls} /> : <HamburgerMenu items={urls} pos={height} />
+          matches ? <DesktopMenu items={urls} /> : <HamburgerMenu items={urls} />
         }
       </Media>
     </TophatWrapper>

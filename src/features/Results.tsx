@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Color } from './theme';
+import { Color } from '../theme';
 
 const ResultsWrapper = styled.div`
   display: none;
   width: 50%;
   background: ${Color['orange-400']};
-  padding: 20px;
+  padding: 2rem;
 `;
 const Results: React.FC = () => {
   return (
