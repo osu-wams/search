@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Search from './Search';
 import Results from './Results';
 import Tophat from './Tophat';
+import Footer from './Footer';
 import { Color, breakpoints } from './theme';
 import backgroundImage from './assets/images/Lester_060517_0205.jpg';
 
@@ -41,6 +42,7 @@ const App: React.FC = () => {
         <Search />
         <Results />
       </Content>
+      <Footer />
     </Page>
   );
 };
