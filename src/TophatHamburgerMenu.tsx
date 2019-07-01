@@ -53,7 +53,7 @@ const TophatHamburgerMenu = (prop: any) => {
       <StyledMenuList pos={prop.pos}>
         {Object.keys(prop.items).map(key => {
           return (
-            <StyledMenuLink as="a" href={prop.items[`${key}`]}>
+            <StyledMenuLink key={key} as="a" href={prop.items[`${key}`]}>
               {key}
             </StyledMenuLink>
           );
