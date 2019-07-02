@@ -14,24 +14,26 @@ const StyledMenuList = styled(MenuList)`
   display: flex;
   flex-direction: column;
   background-color: ${Color['white']};
-  opacity: .96;
+  opacity: 0.96;
   position: absolute;
   top: 8.4rem;
   bottom: 0;
   right: 0;
-  width: 100%;
+  width:100%;
   max-width: 480px;
   padding: 0 ${theme.spacing.unit * 4}px;
-`;
-
-const StyledMenuLink = styled(MenuLink)`
-  &:hover, &:active, &:focus {
-    color: ${Color['orange-400']};
+  [data-reach-menu-item] {
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${Color['orange-400']};
+    }
+    display: block;
+    color: ${Color['neutral-600']};
+    font-size: ${theme.fontSize['24']};
+    padding: ${theme.spacing.unit * 2}px;
+    text-decoration: none;
   }
-  color: ${Color['neutral-600']};
-  font-size: ${theme.fontSize['24']};
-  text-decoration: none;
-  padding: ${theme.spacing.unit * 2}px;
 `;
 
 const StyledIcon = styled(Icon)`
@@ -53,9 +55,9 @@ const TophatHamburgerMenu = (prop: any) => {
       <StyledMenuList>
         {Object.keys(prop.items).map(key => {
           return (
-            <StyledMenuLink key={key} as="a" href={prop.items[`${key}`]}>
+            <MenuLink key={key} css="color=red;" href={prop.items[`${key}`]}>
               {key}
-            </StyledMenuLink>
+            </MenuLink>
           );
         })}
       </StyledMenuList>
