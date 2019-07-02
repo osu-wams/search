@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
@@ -28,7 +28,7 @@ const SearchBarWrapper = styled.div`
 const SearchBarField = styled.input`
   height: 100%;
   font-size: ${theme.fontSize[24]};
-  font-weight: 400;
+  font-weight: 300;
   color: ${Color['neutral-550']};
   position: absolute;
   left: ${theme.spacing.unit * 3}px;
@@ -58,6 +58,7 @@ const SearchBarLabel = styled.label`
   }
   color: ${Color['neutral-550']};
   font-size: ${theme.fontSize[24]};
+  font-weight: 300;
   position: absolute;
   left: ${theme.spacing.unit * 3}px;
   top: ${(60 - (24 + 24 / 2)) / 2}px;
@@ -92,6 +93,17 @@ const SearchBar = (prop: any) => {
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [empty, setEmpty] = useState(true);
+
+  useEffect(() => {
+    if (window.location.search.startsWith('?q=')) {
+      setEmpty(false);
+      const searchField = document.getElementById('searchfield');
+      if (searchField !== null) {
+        (searchField as HTMLInputElement).value = decodeURI(window.location.search.substr(3));
+      }
+    }
+  }, []);
+
   return (
     <SearchBarWrapper
       className={`${hovered ? 'hovered' : ''} ${focused ? 'focused' : ''} ${
@@ -107,6 +119,7 @@ const SearchBar = (prop: any) => {
       </SearchBarLabel>
       <SearchBarField
         type="text"
+        id="searchfield"
         onMouseOver={e => setHovered(true)}
         onMouseOut={e => setHovered(false)}
         onFocus={e => setFocused(true)}
