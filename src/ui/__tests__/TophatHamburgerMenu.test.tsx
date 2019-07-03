@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { render, cleanup, fireEvent, getByTestId } from '@testing-library/react';
 import HMenu from '../TophatHamburgerMenu';
@@ -12,7 +11,7 @@ describe('Hamburger menu exists', () => {
     expect(getByTestId('hamburger-menu')).toBeInstanceOf(HTMLButtonElement);
   });
 
-  it('should contain a list of 3 items: A, B, and C', () => {
+  it('should render a list of 3 items: testA, testB, and testC', () => {
     const { getByText, getByTestId } = render(
       <HMenu
         items={{
@@ -23,7 +22,6 @@ describe('Hamburger menu exists', () => {
       />
     );
 
-    expect(getByTestId('hamburger-menu')).toBeInstanceOf(HTMLButtonElement);
     fireEvent.click(getByTestId('hamburger-menu'));
     expect(getByText('testA')).toBeInstanceOf(HTMLAnchorElement);
     expect(getByText('testB')).toBeInstanceOf(HTMLAnchorElement);
