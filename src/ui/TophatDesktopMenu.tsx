@@ -26,9 +26,15 @@ const MenuLink = styled.a`
 const TophatDesktopMenu = (prop: any) => {
   return (
     <StyledMenu>
-      {Object.keys(prop.items).map(key => {
-        return <MenuLink key={key} href={prop.items[`${key}`]}>{key}</MenuLink>;
-      })}
+      {prop.items
+        ? Object.keys(prop.items).map(key => {
+            return (
+              <MenuLink key={key} href={prop.items[`${key}`]}>
+                {key}
+              </MenuLink>
+            );
+          })
+        : 'empty'}
     </StyledMenu>
   );
 };

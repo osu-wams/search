@@ -19,7 +19,7 @@ const StyledMenuList = styled(MenuList)`
   top: 8.4rem;
   bottom: 0;
   right: 0;
-  width:100%;
+  width: 100%;
   max-width: 480px;
   padding: 0 ${theme.spacing.unit * 4}px;
   [data-reach-menu-item] {
@@ -45,7 +45,7 @@ const TophatHamburgerMenu = (prop: any) => {
 
   return (
     <Menu>
-      <StyledMenuButton onClick={() => setOpen(!isOpen)}>
+      <StyledMenuButton data-testid="hamburger-menu" onClick={() => setOpen(!isOpen)}>
         {isOpen ? (
           <StyledIcon icon={faTimes} color={Color['neutral-550']} />
         ) : (
@@ -53,13 +53,15 @@ const TophatHamburgerMenu = (prop: any) => {
         )}
       </StyledMenuButton>
       <StyledMenuList>
-        {Object.keys(prop.items).map(key => {
-          return (
-            <MenuLink key={key} css="color=red;" href={prop.items[`${key}`]}>
-              {key}
-            </MenuLink>
-          );
-        })}
+        {prop.items
+          ? Object.keys(prop.items).map(key => {
+              return (
+                <MenuLink key={key} css="color=red;" href={prop.items[`${key}`]}>
+                  {key}
+                </MenuLink>
+              );
+            })
+          : 'empty'}
       </StyledMenuList>
     </Menu>
   );
