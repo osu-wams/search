@@ -32,7 +32,6 @@ describe('Search componet exists and functions correctly', () => {
     });
 
     fireEvent.submit(search);
-    debug();
 
     expect(window.location.search).toBe('?q=newValue');
   });

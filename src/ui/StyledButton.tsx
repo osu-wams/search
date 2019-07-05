@@ -8,6 +8,7 @@ const StyledButton = styled.button`
   border: 0;
   border-radius: ${theme.borderRadius};
   font-size: ${theme.fontSize[18]};
+  font-weight: 300;
   padding: ${theme.spacing.unit}px ${theme.spacing.unit * 2}px;
   margin-top: ${theme.spacing.unit * 2}px;
   cursor: pointer;

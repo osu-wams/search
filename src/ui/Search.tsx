@@ -6,15 +6,12 @@ import StyledButton from './StyledButton';
 import Icon from './Icon';
 import { Color, breakpoints, theme } from '../theme';
 
-const SearchText = styled.h2`
-  font-weight: 700;
-  font-size: ${theme.fontSize[28]};
-  color: ${Color.white};
-  margin: 0;
-  margin-bottom: ${theme.spacing.unit * 2}px;
+const SubmitForm = styled.form`
+  box-sizing: border-box;
+  width: 100%;
+  padding: ${theme.spacing.unit * 2}px;
   @media screen and (min-width: ${breakpoints[768]}) {
-    font-size: ${theme.fontSize[48]};
-    margin-bottom: ${theme.spacing.unit * 4}px;
+    width: 768px;
   }
 `;
 
@@ -24,19 +21,18 @@ const Search: React.FC = () => {
   const setUrl = (e: any) => {
     e.preventDefault();
     if (query !== '') {
-      window.location.search = '?q=' + query;
+      window.location.search = '?q=' + encodeURI(query);
     }
   };
 
   return (
-    <form data-testid="search" onSubmit={setUrl}>
-      <SearchText>Find pages, people and places at Oregon State University</SearchText>
+    <SubmitForm data-testid="search" onSubmit={setUrl}>
       <SearchBar setQuery={setQuery} />
       <StyledButton type="submit">
         Search OSU
         <Icon icon={faLongArrowRight} color={Color.white} />
       </StyledButton>
-    </form>
+    </SubmitForm>
   );
 };
 
