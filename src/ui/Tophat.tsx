@@ -43,7 +43,7 @@ const Tophat = () => {
   return (
     <TophatWrapper id="tophat-wrapper">
       <StyledLink href="https://oregonstate.edu/">
-        <TophatLogo src={logo} />
+        <TophatLogo src={logo} alt="Oregon State University" />
       </StyledLink>
       <Media query={`(min-width: ${breakpoints[768]})`}>
         {matches =>
