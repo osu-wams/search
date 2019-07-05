@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, fireEvent, getByTestId } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import HMenu from '../TophatDesktopMenu';
 
 afterEach(cleanup);

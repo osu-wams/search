@@ -94,6 +94,7 @@ const SearchBar = (prop: any) => {
   const [empty, setEmpty] = useState(true);
   return (
     <SearchBarWrapper
+      data-testid="search-bar"
       className={`${hovered ? 'hovered' : ''} ${focused ? 'focused' : ''} ${
         empty ? '' : 'notEmpty'
       }`.trim()}
@@ -106,6 +107,7 @@ const SearchBar = (prop: any) => {
         Search
       </SearchBarLabel>
       <SearchBarField
+        data-testid="search-field"
         type="text"
         onMouseOver={e => setHovered(true)}
         onMouseOut={e => setHovered(false)}
