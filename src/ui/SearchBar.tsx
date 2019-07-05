@@ -12,10 +12,10 @@ const SearchBarWrapper = styled.div`
   border-radius: ${theme.borderRadius};
   border: 2px solid ${Color['neutral-200']};
   &.notEmpty {
-    border-color: ${Color['neutral-400']};
+    border-color: ${Color['neutral-550']};
   }
   &.hovered {
-    border-color: ${Color['neutral-500']};
+    border-color: ${Color['neutral-600']};
   }
   &.focused {
     border-color: ${Color['orange-400']};
@@ -73,11 +73,11 @@ const SearchBarLabel = styled.label`
     padding: 0 ${(11 * 2) / 3}px;
   }
   &.notEmpty {
-    background-color: ${Color['neutral-400']};
+    background-color: ${Color['neutral-550']};
     color: ${Color.white};
   }
   &.notEmpty.hovered {
-    background-color: ${Color['neutral-500']};
+    background-color: ${Color['neutral-600']};
     color: ${Color.white};
   }
   &.notEmpty.focused,
