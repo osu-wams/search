@@ -109,8 +109,8 @@ const SearchBar = (prop: any) => {
       className={`${hovered ? 'hovered' : ''} ${focused ? 'focused' : ''} ${
         empty ? '' : 'notEmpty'
       }`.trim()}
-    >
-      <SearchBarLabel
+    ><label></label>
+      <SearchBarLabel htmlFor="searchfield"
         className={`${hovered ? 'hovered' : ''} ${focused ? 'focused' : ''} ${
           empty ? '' : 'notEmpty'
         }`.trim()}
