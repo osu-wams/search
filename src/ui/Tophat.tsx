@@ -41,13 +41,17 @@ const urls = {
 
 const Tophat = () => {
   return (
-    <TophatWrapper id="tophat-wrapper">
-      <StyledLink href="https://oregonstate.edu/">
-        <TophatLogo src={logo} alt="Oregon State University" />
+    <TophatWrapper data-testid="tophat" id="tophat-wrapper">
+      <StyledLink data-testid="tophat-home" href="https://oregonstate.edu/">
+        <TophatLogo data-testid="tophat-logo" src={logo} />
       </StyledLink>
       <Media query={`(min-width: ${breakpoints[768]})`}>
         {matches =>
-          matches ? <DesktopMenu items={urls} /> : <HamburgerMenu items={urls} />
+          matches ? (
+            <DesktopMenu items={urls} />
+          ) : (
+            <HamburgerMenu items={urls} />
+          )
         }
       </Media>
     </TophatWrapper>
