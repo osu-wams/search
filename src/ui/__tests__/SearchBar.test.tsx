@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, cleanup, fireEvent, getByTestId } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import SearchBar from '../SearchBar';
-import { async } from 'q';
 
 afterEach(cleanup);
 
@@ -24,13 +23,13 @@ describe('Search bar wrapper exists and functions correctly', () => {
     const { getByTestId } = render(<SearchBar />);
     const searchBar = getByTestId('search-bar');
     const searchField = getByTestId('search-field');
-    
+
     fireEvent.focus(searchField);
     expect(searchBar.classList.contains('focused')).toBeTruthy();
   });
 
   it('should have the notEmpty class name', async () => {
-    const { getByTestId } = render(<SearchBar setQuery={()=>{}} />);
+    const { getByTestId } = render(<SearchBar setQuery={() => {}} />);
     const searchField = getByTestId('search-field');
     const searchBar = getByTestId('search-bar');
 

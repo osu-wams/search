@@ -1,11 +1,10 @@
 import React from 'react';
-import { render, cleanup, fireEvent, getByTestId } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import HMenu from '../TophatHamburgerMenu';
 
 afterEach(cleanup);
 
 describe('Hamburger menu exists', () => {
-
   it('should render a hamburger menu button', () => {
     const { getByTestId } = render(<HMenu />);
     expect(getByTestId('hamburger-menu')).toBeInstanceOf(HTMLButtonElement);

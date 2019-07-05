@@ -17,7 +17,7 @@ beforeAll(
 );
 
 describe('Tophat exists', () => {
-  it('should render a tophat wraper', () => {
+  it('should render a tophat wrapper', () => {
     const { getByTestId } = render(<Tophat />);
     expect(getByTestId('tophat')).toBeInstanceOf(HTMLElement);
   });
@@ -32,12 +32,12 @@ describe('Tophat exists', () => {
     expect(getByTestId('tophat-logo')).toBeInstanceOf(HTMLImageElement);
   });
 
-  it('should render a desktop menu when veiwport larger then 768', () => {
+  it('should render a desktop menu when viewport larger than 768', () => {
     const { getByTestId } = render(<Tophat />);
     expect(getByTestId('desktop-menu')).toBeInstanceOf(HTMLElement);
   });
 
-  it('should render a hamburger menu when veiwport smaller then 768', () => {
+  it('should render a hamburger menu when viewport smaller than 768', () => {
     window.matchMedia = jest.fn().mockImplementation(query => {
       return {
         matches: false,
