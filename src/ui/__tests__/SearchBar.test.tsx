@@ -14,15 +14,19 @@ describe('Search bar wrapper exists and functions correctly', () => {
   it('should have the hovered class name', () => {
     const { getByTestId } = render(<SearchBar />);
     const searchBar = getByTestId('search-bar');
-    fireEvent.mouseOver(searchBar);
-    expect(searchBar.classList.contains('hovered')).toBeTruthy;
+    const searchField = getByTestId('search-field');
+
+    fireEvent.mouseOver(searchField);
+    expect(searchBar.classList.contains('hovered')).toBeTruthy();
   });
 
   it('should have the focused class name', () => {
     const { getByTestId } = render(<SearchBar />);
     const searchBar = getByTestId('search-bar');
-    fireEvent.focus(searchBar);
-    expect(searchBar.classList.contains('focused')).toBeTruthy;
+    const searchField = getByTestId('search-field');
+    
+    fireEvent.focus(searchField);
+    expect(searchBar.classList.contains('focused')).toBeTruthy();
   });
 
   it('should have the notEmpty class name', async () => {

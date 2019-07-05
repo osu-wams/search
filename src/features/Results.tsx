@@ -13,9 +13,13 @@ const ResultsTitle = styled.h2`
 
 const Results: React.FC = () => {
   return (
-    <Card className="row-span-3 left">
+    <Card data-testid="result-card" className="row-span-3 left">
       <ResultsTitle>Search Results</ResultsTitle>
-      <div className="gcse-searchresults-only" data-personalizedads="false"></div>
+      <div
+        data-testid="results"
+        className="gcse-searchresults-only"
+        data-personalizedads="false"
+      ></div>
     </Card>
   );
 };
