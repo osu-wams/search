@@ -29,7 +29,7 @@ const Search: React.FC = () => {
   };
 
   return (
-    <form onSubmit={setUrl}>
+    <form data-testid="search" onSubmit={setUrl}>
       <SearchText>Find pages, people and places at Oregon State University</SearchText>
       <SearchBar setQuery={setQuery} />
       <StyledButton type="submit">
