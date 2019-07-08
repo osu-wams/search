@@ -106,10 +106,11 @@ const SearchBar = (prop: any) => {
 
   return (
     <SearchBarWrapper
+      data-testid="search-bar"
       className={`${hovered ? 'hovered' : ''} ${focused ? 'focused' : ''} ${
         empty ? '' : 'notEmpty'
       }`.trim()}
-    ><label></label>
+    >
       <SearchBarLabel htmlFor="searchfield"
         className={`${hovered ? 'hovered' : ''} ${focused ? 'focused' : ''} ${
           empty ? '' : 'notEmpty'
@@ -118,6 +119,7 @@ const SearchBar = (prop: any) => {
         Search
       </SearchBarLabel>
       <SearchBarField
+        data-testid="search-field"
         type="text"
         id="searchfield"
         onMouseOver={e => setHovered(true)}

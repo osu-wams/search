@@ -26,7 +26,7 @@ const Search: React.FC = () => {
   };
 
   return (
-    <SubmitForm onSubmit={setUrl}>
+    <SubmitForm data-testid="search" onSubmit={setUrl}>
       <SearchBar setQuery={setQuery} />
       <StyledButton type="submit">
         Search OSU
