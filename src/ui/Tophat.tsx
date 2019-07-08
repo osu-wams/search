@@ -35,19 +35,7 @@ const Tophat = () => {
       <StyledLink data-testid="tophat-home" href="https://oregonstate.edu/">
         <TophatLogo data-testid="tophat-logo" src={logo} />
       </StyledLink>
-<<<<<<< HEAD
       <TophatMenu items={menuLinks.tophat} />
-=======
-      <Media query={`(min-width: ${breakpoints[768]})`}>
-        {matches =>
-          matches ? (
-            <DesktopMenu items={urls} />
-          ) : (
-            <HamburgerMenu items={urls} />
-          )
-        }
-      </Media>
->>>>>>> develop
     </TophatWrapper>
   );
 };
