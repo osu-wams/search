@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Media from 'react-media';
 import logo from '../assets/images/logo.png';
 import { Color, breakpoints } from '../theme';
-import DesktopMenu from './TophatDesktopMenu';
-import HamburgerMenu from './TophatHamburgerMenu';
+import TophatMenu from './TophatMenu';
+import menuLinks from '../assets/menuLinks';
 
 const TophatWrapper = styled.header`
   z-index: 1;
@@ -30,26 +29,13 @@ const StyledLink = styled.a`
   margin-right: 3.6rem;
 `;
 
-const urls = {
-  About: 'https://oregonstate.edu/about',
-  Academics: 'https://oregonstate.edu/academics',
-  Research: 'https://oregonstate.edu/osuresearch',
-  Outreach: 'https://outreach.oregonstate.edu',
-  Athletics: 'https://osubeavers.com',
-  OSU150: 'https://oregonstate.edu/osu150'
-};
-
 const Tophat = () => {
   return (
     <TophatWrapper id="tophat-wrapper">
       <StyledLink href="https://oregonstate.edu/">
         <TophatLogo src={logo} alt="Oregon State University" />
       </StyledLink>
-      <Media query={`(min-width: ${breakpoints[768]})`}>
-        {matches =>
-          matches ? <DesktopMenu items={urls} /> : <HamburgerMenu items={urls} />
-        }
-      </Media>
+      <TophatMenu items={menuLinks.tophat} />
     </TophatWrapper>
   );
 };
