@@ -8,11 +8,8 @@ const SearchBarWrapper = styled.div`
   box-sizing: border-box;
   height: 64px;
   position: relative;
-  /** TODO: Probably conditional switching to orenge  */
   background-color: ${Color.white};
   border-radius: ${theme.borderRadius};
-
-  /** TODO: Probably conditional to white  */
   border: 2px solid ${Color['neutral-200']};
   &.notEmpty {
     border-color: ${Color['neutral-550']};
