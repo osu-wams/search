@@ -42,12 +42,15 @@ const Content = styled.div`
 
 const ResultsContent = styled(Content)`
   display: grid;
-  height: auto;
+  height: 100%;
   grid-template-columns: 1fr;
+  grid-row-gap: ${theme.spacing.unit * 2}px;
   @media screen and (min-width: 768px) {
     grid-template-columns: 2fr 1fr;
+    grid-auto-rows: min-content;
     grid-column-gap: ${theme.spacing.unit * 2}px;
     grid-auto-flow: dense;
+    align-items: flex-start;
     .row-span-3 {
       grid-row: span 3;
     }
@@ -99,9 +102,9 @@ const App: React.FC = () => {
             <Search />
           </SearchBackground>
           <ResultsContent>
-            <People />
-            <Places />
             <Results />
+            <People query={decodeURI(window.location.search.substr(3))} />
+            <Places query={decodeURI(window.location.search.substr(3))} />
           </ResultsContent>
           <Footer />
         </ResultsPage>

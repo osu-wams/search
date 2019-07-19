@@ -9,6 +9,7 @@ const FooterWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1.6rem;
+  margin-top: ${theme.spacing.unit * 2}px;
 `;
 
 const FooterNote = styled.p`
