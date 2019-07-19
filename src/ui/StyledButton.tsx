@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { Color, breakpoints, theme } from '../theme';
 
 const StyledButton = styled.button`
-  background-color: ${Color['orange-400']};
-  color: ${Color.white};
+  background-color: ${props => (props.theme.results ? Color.white : Color['orange-400'])};
+  color: ${props => (props.theme.results ? Color['orange-400'] : Color.white)};
   text-decoration: none;
   border: 0;
   border-radius: ${theme.borderRadius};
@@ -12,8 +12,11 @@ const StyledButton = styled.button`
   padding: ${theme.spacing.unit}px ${theme.spacing.unit * 2}px;
   margin-top: ${theme.spacing.unit * 2}px;
   cursor: pointer;
-  &:active, &:focus, &:hover {
-    background-color: ${Color["neutral-550"]};
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: ${props =>
+      props.theme.results ? Color['neutral-300'] : Color['neutral-550']};
   }
   & > svg {
     margin-left: ${theme.spacing.unit * 2}px;
@@ -22,5 +25,11 @@ const StyledButton = styled.button`
     margin-top: ${theme.spacing.unit * 4}px;
   }
 `;
+
+StyledButton.defaultProps = {
+  theme: {
+    results: false
+  }
+};
 
 export default StyledButton;

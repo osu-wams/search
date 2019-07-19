@@ -23,6 +23,10 @@ const SearchBarWrapper = styled.div`
   @media screen and (min-width: ${breakpoints[768]}) {
     width: 100%;
   }
+  &.results {
+    background-color: ${Color['orange-400']};
+    border-color: ${Color.white};
+  }
 `;
 
 const SearchBarField = styled.input`
@@ -36,6 +40,9 @@ const SearchBarField = styled.input`
   border: 0;
   padding: 0;
   width: calc(100% - ${3 * (theme.spacing.unit * 3) + 24}px);
+  &.results {
+    color: ${Color.white};
+  }
 `;
 
 const SearchBarIcon = styled(Icon)`
@@ -52,8 +59,8 @@ const SearchBarLabel = styled.label`
       color: ${Color['neutral-550']};
     }
     100% {
-      background-color: ${Color['orange-400']};
-      color: ${Color.white};
+      background-color: ${props => (props.theme.results ? Color.white : Color['orange-400'])};
+      color: ${props => (props.theme.results ? Color['orange-400'] : Color.white)};
     }
   }
   color: ${Color['neutral-550']};
@@ -87,16 +94,32 @@ const SearchBarLabel = styled.label`
     transform-origin: top left;
     transition: all cubic-bezier(0.4, 0, 0.2, 1) 100ms;
   }
+  &.results {
+    background-color: none;
+    color: ${Color.white};
+  }
+  &.results.notEmpty {
+    background-color: ${Color.white};
+    color: ${Color['orange-400']};
+  }
 `;
+
+SearchBarLabel.defaultProps = {
+  theme: {
+    results: false
+  }
+};
 
 const SearchBar = (prop: any) => {
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [empty, setEmpty] = useState(true);
+  const [results, setResults] = useState(false);
 
   useEffect(() => {
     if (window.location.search.startsWith('?q=')) {
       setEmpty(false);
+      setResults(true);
       const searchField = document.getElementById('searchfield');
       if (searchField !== null) {
         (searchField as HTMLInputElement).value = decodeURI(window.location.search.substr(3));
@@ -109,16 +132,19 @@ const SearchBar = (prop: any) => {
       data-testid="search-bar"
       className={`${hovered ? 'hovered' : ''} ${focused ? 'focused' : ''} ${
         empty ? '' : 'notEmpty'
-      }`.trim()}
+      } ${results ? 'results' : ''}`.trim()}
     >
-      <SearchBarLabel htmlFor="searchfield"
+      <SearchBarLabel
+        theme={{ results: results }}
+        htmlFor="searchfield"
         className={`${hovered ? 'hovered' : ''} ${focused ? 'focused' : ''} ${
           empty ? '' : 'notEmpty'
-        }`.trim()}
+        } ${results ? 'results' : ''}`.trim()}
       >
         Search
       </SearchBarLabel>
       <SearchBarField
+        className={`${results ? 'results' : ''}`}
         data-testid="search-field"
         type="text"
         id="searchfield"
@@ -135,7 +161,7 @@ const SearchBar = (prop: any) => {
           prop.setQuery(e.target.value);
         }}
       />
-      <SearchBarIcon icon={faSearch} color={Color['neutral-550']} />
+      <SearchBarIcon icon={faSearch} color={results ? Color.white : Color['neutral-550']} />
     </SearchBarWrapper>
   );
 };
