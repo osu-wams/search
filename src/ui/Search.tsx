@@ -28,9 +28,11 @@ const Search: React.FC = () => {
   return (
     <SubmitForm data-testid="search" onSubmit={setUrl}>
       <SearchBar setQuery={setQuery} />
-      <StyledButton type="submit">
+      <StyledButton theme={{
+        results: window.location.search.startsWith('?q=') ? true : false
+      }} type="submit">
         Search OSU
-        <Icon icon={faLongArrowRight} color={Color.white} />
+        <Icon icon={faLongArrowRight} color={window.location.search.startsWith('?q=') ? Color["orange-400"] : Color.white} />
       </StyledButton>
     </SubmitForm>
   );
