@@ -9,6 +9,7 @@ import request from 'request-promise';
 import { Color, theme } from '../theme';
 import Icon from './Icon';
 import { Card, CardSplit } from './Card';
+import default_image from '../assets/images/default_place.png';
 
 const PlacesCard = styled(Card)`
   padding: ${theme.spacing.unit * 2}px;
@@ -137,7 +138,7 @@ const Places = ({ query }: { query: String }) => {
         {places.map(place => {
           return (
             <Place key={place.id}>
-              <PlaceImage src={place.image} />
+              <PlaceImage src={place.image === null ? default_image : place.image} />
               <PlaceLink href={place.link}>{place.name}</PlaceLink>
             </Place>
           );
