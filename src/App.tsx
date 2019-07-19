@@ -61,7 +61,7 @@ const ResultsContent = styled(Content)`
 `;
 
 const SearchBackground = styled.div`
-  background-color: ${Color["orange-400"]};
+  background-color: ${Color['orange-400']};
   width: 100%;
   display: flex;
   justify-content: center;

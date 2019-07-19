@@ -27,7 +27,7 @@ const SearchBarWrapper = styled.div`
     width: 100%;
   }
   &.results {
-    background-color: ${Color["orange-400"]};
+    background-color: ${Color['orange-400']};
     border-color: ${Color.white};
   }
 `;
@@ -62,8 +62,8 @@ const SearchBarLabel = styled.label`
       color: ${Color['neutral-550']};
     }
     100% {
-      background-color: ${props => props.theme.results ? Color.white : Color['orange-400']};
-      color: ${props => props.theme.results ? Color["orange-400"] : Color.white};
+      background-color: ${props => (props.theme.results ? Color.white : Color['orange-400'])};
+      color: ${props => (props.theme.results ? Color['orange-400'] : Color.white)};
     }
   }
   color: ${Color['neutral-550']};
@@ -103,7 +103,7 @@ const SearchBarLabel = styled.label`
   }
   &.results.notEmpty {
     background-color: ${Color.white};
-    color: ${Color["orange-400"]};
+    color: ${Color['orange-400']};
   }
 `;
 
@@ -111,7 +111,7 @@ SearchBarLabel.defaultProps = {
   theme: {
     results: false
   }
-}
+};
 
 const SearchBar = (prop: any) => {
   const [hovered, setHovered] = useState(false);
@@ -138,7 +138,7 @@ const SearchBar = (prop: any) => {
       } ${results ? 'results' : ''}`.trim()}
     >
       <SearchBarLabel
-        theme={{results:results}}
+        theme={{ results: results }}
         htmlFor="searchfield"
         className={`${hovered ? 'hovered' : ''} ${focused ? 'focused' : ''} ${
           empty ? '' : 'notEmpty'
