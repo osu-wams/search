@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Color, theme } from '../theme';
-import Card from '../ui/Card';
+import { Card } from '../ui/Card';
 
 const ResultsTitle = styled.h2`
   font-weight: 300;
