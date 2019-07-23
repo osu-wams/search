@@ -88,13 +88,13 @@ workflows:
   build_test_deploy:
     jobs:
       - install
-      - lint-test-coverage:
-          requires:
-            - install
+      # - lint-test-coverage:
+      #     requires:
+      #       - install
 
       - build-dev:
-          requires:
-            - lint-test-coverage
+          # requires:
+          #   - lint-test-coverage
           context: search-dev
           filters:
             branches:
