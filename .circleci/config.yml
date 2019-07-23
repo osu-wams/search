@@ -69,8 +69,6 @@ jobs:
 
   build-dev:
     <<: *build
-#  build-prod:
-#    <<: *build
 
   deploy: &deploy
     docker:
@@ -85,22 +83,6 @@ jobs:
 
   deploy-dev:
     <<: *deploy
-  deploy-prod:
-    <<: *deploy
-
-  flush-cache: &flush-cache
-    executor: aws-cli/default
-    steps:
-      - aws-cli/install
-      - aws-cli/configure
-      - run:
-          name: Invalidate Index
-          command: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_DISTRIBUTION_ID} --paths /index.html
-
-  flush-cache-dev:
-    <<: *flush-cache
-  flush-cache-prod:
-    <<: *flush-cache
 
 workflows:
   build_test_deploy:
@@ -135,27 +117,3 @@ workflows:
               ignore:
                 - master
 
-      - build-prod:
-          requires:
-            - lint-test-coverage
-          context: search-prod
-          filters:
-            branches:
-              only:
-                - master
-      - deploy-prod:
-          requires:
-            - build-prod
-          context: search-prod
-          filters:
-            branches:
-              only:
-                - master
-      - flush-cache-prod:
-          requires:
-            - deploy-prod
-          context: search-prod
-          filters:
-            branches:
-              only:
-                - master
