@@ -93,8 +93,9 @@ workflows:
       #       - install
 
       - build-dev:
-          # requires:
+          requires:
           #   - lint-test-coverage
+            - install
           context: search-dev
           filters:
             branches:
