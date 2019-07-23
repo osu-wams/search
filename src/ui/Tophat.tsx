@@ -33,7 +33,7 @@ const Tophat = () => {
   return (
     <TophatWrapper data-testid="tophat" id="tophat-wrapper">
       <StyledLink data-testid="tophat-home" href="https://oregonstate.edu/">
-        <TophatLogo data-testid="tophat-logo" src={logo} />
+        <TophatLogo data-testid="tophat-logo" src={logo} alt="Oregon State University" />
       </StyledLink>
       <TophatMenu items={menuLinks.tophat} />
     </TophatWrapper>
