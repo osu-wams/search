@@ -69,8 +69,8 @@ jobs:
 
   build-dev:
     <<: *build
-  build-prod:
-    <<: *build
+#  build-prod:
+#    <<: *build
 
   deploy: &deploy
     docker:
