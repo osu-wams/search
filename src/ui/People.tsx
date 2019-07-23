@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { faIdCard, faLongArrowRight, faUserCircle } from '@fortawesome/pro-light-svg-icons';
+import { faLongArrowRight, faUserCircle } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components';
 import request from 'request-promise';
 import { Color, theme } from '../theme';
 import Icon from './Icon';
-import { Card, CardSplit } from './Card';
-
-const PeopleCard = styled(Card)`
-  padding: ${theme.spacing.unit * 2}px;
-`;
+import { Card, CardTitle, CardContent, CardFooter } from './Card';
 
 const PeopleIcon = styled(Icon)`
   font-size: ${theme.fontSize[32]};
@@ -24,27 +20,26 @@ const PersonDept = styled.p`
   font-size: ${theme.fontSize[12]};
 `;
 
-const PeopleTitle = styled.h2`
-  padding: 0;
-  font-weight: 300;
-  color: ${Color['neutral-550']};
-  font-size: ${theme.fontSize[18]};
-  margin: 0;
-`;
-
 const PeopleList = styled.ul`
   list-style-type: none;
   margin: 0;
-  margin-bottom: ${theme.spacing.unit}px;
   padding: 0;
-  padding-top: ${theme.spacing.unit}px;
   color: ${Color['neutral-700']};
   font-size: ${theme.fontSize[16]};
   font-weight: 300;
 `;
 
 const Person = styled.li`
-  padding: ${theme.spacing.unit}px 0;
+  padding: 0;
+  padding-top: ${theme.spacing.unit * 2}px;
+`;
+
+const PeopleStatus = styled.p`
+  color: ${Color['neutral-700']};
+  font-size: ${theme.fontSize[16]};
+  font-weight: 300;
+  margin: 0;
+  padding-top: ${theme.spacing.unit * 2}px;
 `;
 
 const PersonLink = styled.a`
@@ -71,14 +66,21 @@ const PeopleLink = styled.a`
 
 const PeopleEmptyState: React.FC = () => {
   return (
-    <PeopleCard>
-      <PeopleIcon icon={faIdCard} color={Color['neutral-400']} />
-      <PeopleTitle>No people found.</PeopleTitle>
-      <PeopleLink href="http://directory.oregonstate.edu">
-        Search for people in the OSU directory
-        <Icon icon={faLongArrowRight} color={Color['orange-400']} />
-      </PeopleLink>
-    </PeopleCard>
+    <Card>
+      <CardTitle>
+        <PeopleIcon icon={faUserCircle} color={Color['neutral-400']} />
+        People
+      </CardTitle>
+      <CardContent>
+        <PeopleStatus>No people found.</PeopleStatus>
+      </CardContent>
+      <CardFooter>
+        <PeopleLink href="http://directory.oregonstate.edu">
+          Search for people in the OSU directory
+          <Icon icon={faLongArrowRight} color={Color['orange-400']} />
+        </PeopleLink>
+      </CardFooter>
+    </Card>
   );
 };
 
@@ -116,33 +118,36 @@ const People = ({ query }: { query: String }) => {
   }
 
   return (
-    <PeopleCard>
-      <PeopleTitle>
+    <Card>
+      <CardTitle>
         <PeopleIcon icon={faUserCircle} color={Color['neutral-400']} />
         People
-      </PeopleTitle>
-      <CardSplit />
-      <PeopleList>
-        {people.map(person => {
-          return (
-            <Person key={person.id}>
-              <PersonLink
-                href={`http://directory.oregonstate.edu/?type=showfull&osuuid=${person.id}`}
-              >
-                <PersonName>
-                  {person.firstName} {person.lastName}
-                </PersonName>
-                <PersonDept>{person.department}</PersonDept>
-              </PersonLink>
-            </Person>
-          );
-        })}
-      </PeopleList>
-      <PeopleLink href={`http://directory.oregonstate.edu/?type=search&cn=${query}`}>
-        OSU Directory
-        <Icon icon={faLongArrowRight} color={Color['orange-400']} />
-      </PeopleLink>
-    </PeopleCard>
+      </CardTitle>
+      <CardContent>
+        <PeopleList>
+          {people.map(person => {
+            return (
+              <Person key={person.id}>
+                <PersonLink
+                  href={`http://directory.oregonstate.edu/?type=showfull&osuuid=${person.id}`}
+                >
+                  <PersonName>
+                    {person.firstName} {person.lastName}
+                  </PersonName>
+                  <PersonDept>{person.department}</PersonDept>
+                </PersonLink>
+              </Person>
+            );
+          })}
+        </PeopleList>
+      </CardContent>
+      <CardFooter>
+        <PeopleLink href={`http://directory.oregonstate.edu/?type=search&cn=${query}`}>
+          OSU Directory
+          <Icon icon={faLongArrowRight} color={Color['orange-400']} />
+        </PeopleLink>
+      </CardFooter>
+    </Card>
   );
 };
 
