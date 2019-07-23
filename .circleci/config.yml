@@ -108,12 +108,3 @@ workflows:
             branches:
               ignore:
                 - master
-      - flush-cache-dev:
-          requires:
-            - deploy-dev
-          context: search-dev
-          filters:
-            branches:
-              ignore:
-                - master
-
