@@ -26,7 +26,7 @@ const ResultsPage = styled(Page)`
   background-image: none;
 `;
 
-const Content = styled.div`
+const Content = styled.main`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
@@ -63,7 +63,7 @@ const ResultsContent = styled(Content)`
   }
 `;
 
-const SearchBackground = styled.div`
+const SearchBackground = styled.nav`
   background-color: ${Color['orange-400']};
   width: 100%;
   display: flex;

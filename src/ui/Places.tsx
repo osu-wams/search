@@ -1,48 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import {
-  faSearchLocation,
-  faLongArrowRight,
-  faMapMarkerAlt
-} from '@fortawesome/pro-light-svg-icons';
+import { faLongArrowRight, faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components';
 import request from 'request-promise';
 import { Color, theme } from '../theme';
 import Icon from './Icon';
-import { Card, CardSplit } from './Card';
+import { Card, CardTitle, CardContent, CardFooter } from './Card';
 import default_image from '../assets/images/default_place.png';
-
-const PlacesCard = styled(Card)`
-  padding: ${theme.spacing.unit * 2}px;
-`;
 
 const PlacesIcon = styled(Icon)`
   font-size: ${theme.fontSize[32]};
   margin-right: ${theme.spacing.unit}px;
 `;
 
-const PlacesTitle = styled.h2`
-  padding: 0;
-  font-weight: 300;
-  color: ${Color['neutral-550']};
-  font-size: ${theme.fontSize[18]};
-  margin: 0;
-`;
-
 const PlacesList = styled.ul`
   list-style-type: none;
   margin: 0;
-  margin-bottom: ${theme.spacing.unit}px;
   padding: 0;
-  padding-top: ${theme.spacing.unit}px;
   color: ${Color['neutral-700']};
   font-size: ${theme.fontSize[16]};
   font-weight: 300;
 `;
 
 const Place = styled.li`
-  padding: ${theme.spacing.unit}px 0;
+  padding: 0;
+  padding-top: ${theme.spacing.unit * 2}px;
   display: flex;
   align-items: center;
+`;
+
+const PlacesStatus = styled.p`
+  color: ${Color['neutral-700']};
+  font-size: ${theme.fontSize[16]};
+  font-weight: 300;
+  margin: 0;
+  padding-top: ${theme.spacing.unit * 2}px;
 `;
 
 const PlaceLink = styled.a`
@@ -77,14 +68,21 @@ const PlaceImage = styled.img`
 
 const PlacesEmptyState: React.FC = () => {
   return (
-    <PlacesCard>
-      <PlacesIcon icon={faSearchLocation} color={Color['neutral-400']} />
-      <PlacesTitle>No places found.</PlacesTitle>
-      <PlacesLink href="https://map.oregonstate.edu">
-        Find buildings, parking and more on the campus map
-        <Icon icon={faLongArrowRight} color={Color['orange-400']} />
-      </PlacesLink>
-    </PlacesCard>
+    <Card>
+      <CardTitle>
+        <PlacesIcon icon={faMapMarkerAlt} color={Color['neutral-400']} />
+        Places
+      </CardTitle>
+      <CardContent>
+        <PlacesStatus>No places found.</PlacesStatus>
+      </CardContent>
+      <CardFooter>
+        <PlacesLink href="https://map.oregonstate.edu">
+          Find buildings, parking and more on the campus map
+          <Icon icon={faLongArrowRight} color={Color['orange-400']} />
+        </PlacesLink>
+      </CardFooter>
+    </Card>
   );
 };
 
@@ -128,27 +126,30 @@ const Places = ({ query }: { query: String }) => {
   }
 
   return (
-    <PlacesCard>
-      <PlacesTitle>
+    <Card>
+      <CardTitle>
         <PlacesIcon icon={faMapMarkerAlt} color={Color['neutral-400']} />
         Places
-      </PlacesTitle>
-      <CardSplit />
-      <PlacesList>
-        {places.map(place => {
-          return (
-            <Place key={place.id}>
-              <PlaceImage src={place.image === null ? default_image : place.image} />
-              <PlaceLink href={place.link}>{place.name}</PlaceLink>
-            </Place>
-          );
-        })}
-      </PlacesList>
-      <PlacesLink href="https://map.oregonstate.edu">
-        Campus Map
-        <Icon icon={faLongArrowRight} color={Color['orange-400']} />
-      </PlacesLink>
-    </PlacesCard>
+      </CardTitle>
+      <CardContent>
+        <PlacesList>
+          {places.map(place => {
+            return (
+              <Place key={place.id}>
+                <PlaceImage src={place.image === null ? default_image : place.image} />
+                <PlaceLink href={place.link}>{place.name}</PlaceLink>
+              </Place>
+            );
+          })}
+        </PlacesList>
+      </CardContent>
+      <CardFooter>
+        <PlacesLink href="https://map.oregonstate.edu">
+          Campus Map
+          <Icon icon={faLongArrowRight} color={Color['orange-400']} />
+        </PlacesLink>
+      </CardFooter>
+    </Card>
   );
 };
 
