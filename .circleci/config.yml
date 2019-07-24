@@ -69,6 +69,8 @@ jobs:
 
   build-dev:
     <<: *build
+  build-prod:
+    <<: *build
 
   deploy: &deploy
     docker:
@@ -83,6 +85,8 @@ jobs:
 
   deploy-dev:
     <<: *deploy
+  deploy-prod:
+    <<: *deploy
 
 workflows:
   build_test_deploy:
@@ -91,7 +95,6 @@ workflows:
       - lint-test-coverage:
           requires:
             - install
-
       - build-dev:
           requires:
             - lint-test-coverage
@@ -107,4 +110,20 @@ workflows:
           filters:
             branches:
               ignore:
+                - master
+      - build-prod:
+          requires:
+            - lint-test-coverage
+          context: search-prod
+          filters:
+            branches:
+              only:
+                - master
+      - deploy-prod:
+          requires:
+            - build-prod
+          context: search-prod
+          filters:
+            branches:
+              only:
                 - master
