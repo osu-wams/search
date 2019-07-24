@@ -72,7 +72,7 @@ jobs:
   build-prod:
     <<: *build
 
-  deploy: &deploy
+  deploy-dev:
     docker:
       - image: circleci/python:2.7
     steps:
@@ -81,12 +81,17 @@ jobs:
 
       - aws-s3/sync:
           from: ~/project/build
-          to: ${AWS_S3_BUCKET_URL}
-
-  deploy-dev:
-    <<: *deploy
+          to: ${AWS_S3_BUCKET_URL_DEV}
   deploy-prod:
-    <<: *deploy
+    docker:
+      - image: circleci/python:2.7
+    steps:
+      - attach_workspace:
+          at: ~/
+
+      - aws-s3/sync:
+          from: ~/project/build
+          to: ${AWS_S3_BUCKET_URL_PROD}
 
 workflows:
   build_test_deploy:
