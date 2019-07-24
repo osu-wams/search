@@ -1,18 +1,33 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import HMenu from '../TophatHamburgerMenu';
+import TophatMenu from '../TophatMenu';
 
 afterEach(cleanup);
 
+// Mobile
+/* This function mocks media queries. Changing the value of
+ * `matches` determines whether it's desktop or mobile. A
+ * value of `true` means desktop, `false` means mobile.
+ */
+window.matchMedia = jest.fn().mockImplementation(query => {
+  return {
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn()
+  };
+});
+
 describe('Hamburger menu exists', () => {
   it('should render a hamburger menu button', () => {
-    const { getByTestId } = render(<HMenu />);
+    const { getByTestId } = render(<TophatMenu />);
     expect(getByTestId('hamburger-menu')).toBeInstanceOf(HTMLButtonElement);
   });
 
   it('should render a list of 3 items: testA, testB, and testC', () => {
     const { getByText, getByTestId } = render(
-      <HMenu
+      <TophatMenu
         items={{
           testA: 'https://testing.com/A',
           testB: 'https://testing.com/B',
