@@ -63,18 +63,20 @@ const TophatMenu = (prop: any) => {
     <Media query={`(min-width: ${breakpoints[768]})`}>
       {match =>
         match ? (
-          <StyledMenu>
-            {Object.keys(prop.items).map(key => {
-              return (
-                <StyledLink key={key} href={prop.items[`${key}`]}>
-                  {key}
-                </StyledLink>
-              );
-            })}
+          <StyledMenu data-testid="desktop-menu">
+            {prop.items
+              ? Object.keys(prop.items).map(key => {
+                  return (
+                    <StyledLink key={key} href={prop.items[`${key}`]}>
+                      {key}
+                    </StyledLink>
+                  );
+                })
+              : 'empty'}
           </StyledMenu>
         ) : (
           <Menu>
-            <StyledMenuButton onClick={() => setOpen(!isOpen)}>
+            <StyledMenuButton data-testid="hamburger-menu" onClick={() => setOpen(!isOpen)}>
               {isOpen ? (
                 <StyledIcon icon={faTimes} color={Color['neutral-550']} />
               ) : (
@@ -82,13 +84,15 @@ const TophatMenu = (prop: any) => {
               )}
             </StyledMenuButton>
             <StyledMenuList>
-              {Object.keys(prop.items).map(key => {
-                return (
-                  <MenuLink key={key} css="color=red;" href={prop.items[`${key}`]}>
-                    {key}
-                  </MenuLink>
-                );
-              })}
+              {prop.items
+                ? Object.keys(prop.items).map(key => {
+                    return (
+                      <MenuLink key={key} css="color=red;" href={prop.items[`${key}`]}>
+                        {key}
+                      </MenuLink>
+                    );
+                  })
+                : 'empty'}
             </StyledMenuList>
           </Menu>
         )
