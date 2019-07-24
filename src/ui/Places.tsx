@@ -78,7 +78,7 @@ const PlacesEmptyState: React.FC = () => {
       </CardContent>
       <CardFooter>
         <PlacesLink href="https://map.oregonstate.edu">
-          Find buildings, parking and more on the campus map
+          Campus Map
           <Icon icon={faLongArrowRight} color={Color['orange-400']} />
         </PlacesLink>
       </CardFooter>

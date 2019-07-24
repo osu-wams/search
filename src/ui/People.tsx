@@ -76,7 +76,7 @@ const PeopleEmptyState: React.FC = () => {
       </CardContent>
       <CardFooter>
         <PeopleLink href="http://directory.oregonstate.edu">
-          Search for people in the OSU directory
+          OSU Directory
           <Icon icon={faLongArrowRight} color={Color['orange-400']} />
         </PeopleLink>
       </CardFooter>
