@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../assets/images/logo.png';
-import { Color, breakpoints, theme } from '../theme';
+import { Color, breakpoints } from '../theme';
 import TophatMenu from './TophatMenu';
 import menuLinks from '../assets/menuLinks';
 
