@@ -15,7 +15,6 @@ const StyledMenuList = styled(MenuList)`
   display: flex;
   flex-direction: column;
   background-color: ${Color['white']};
-  opacity: 0.96;
   position: absolute;
   top: 8.4rem;
   bottom: 0;
@@ -28,6 +27,7 @@ const StyledMenuList = styled(MenuList)`
     &:active,
     &:focus {
       color: ${Color['orange-400']};
+      outline: 0px solid transparent;
     }
     display: block;
     color: ${Color['neutral-600']};

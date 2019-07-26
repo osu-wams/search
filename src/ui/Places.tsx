@@ -17,7 +17,6 @@ const PlacesList = styled.ul`
   margin: 0;
   padding: 0;
   color: ${Color['neutral-700']};
-  font-size: ${theme.fontSize[16]};
   font-weight: 300;
 `;
 
@@ -38,10 +37,27 @@ const PlacesStatus = styled.p`
 
 const PlaceLink = styled.a`
   color: ${Color.black};
+  font-size: ${theme.fontSize[16]};
   text-decoration: none;
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const PlaceSkelLink = styled(PlaceLink)`
+  @keyframes place-waiting {
+    from {
+      background-color: ${Color['neutral-100']};
+    }
+    to {
+      background-color: ${Color['neutral-200']};
+    }
+  }
+  background-color: ${Color['neutral-100']};
+  height: ${theme.fontSize[16]};
+  width: 60%;
+  margin: 4px 0;
+  animation: place-waiting 900ms 300ms infinite alternate;
 `;
 
 const PlacesLink = styled.a`
@@ -66,28 +82,83 @@ const PlaceImage = styled.img`
   margin-right: ${theme.spacing.unit}px;
 `;
 
+const PlaceSkelImage = styled(PlaceImage).attrs({ as: 'div' })`
+  @keyframes place-waiting {
+    from {
+      background-color: ${Color['neutral-100']};
+    }
+    to {
+      background-color: ${Color['neutral-200']};
+    }
+  }
+  background-color: ${Color['neutral-100']};
+  animation: place-waiting 900ms 300ms infinite alternate;
+`;
+
+const PlacesTotal = styled.p`
+  margin: 0;
+  margin-top: ${theme.spacing.unit * 2 + 2}px;
+  padding: 0;
+  font-size: ${theme.fontSize[14]};
+  color: ${Color['neutral-550']};
+  font-style: italic;
+  font-weight: 300;
+`;
+
+const PlacesTitle: React.FC = () => {
+  return (
+    <CardTitle>
+      <PlacesIcon icon={faMapMarkerAlt} color={Color['neutral-400']} />
+      Places
+    </CardTitle>
+  );
+};
+
+const PlacesFooter = () => {
+  return (
+    <CardFooter>
+      <PlacesLink href="https://map.oregonstate.edu">
+        Campus Map
+        <Icon icon={faLongArrowRight} color={Color['orange-400']} />
+      </PlacesLink>
+    </CardFooter>
+  );
+};
+
 const PlacesEmptyState: React.FC = () => {
   return (
     <Card>
-      <CardTitle>
-        <PlacesIcon icon={faMapMarkerAlt} color={Color['neutral-400']} />
-        Places
-      </CardTitle>
+      <PlacesTitle />
       <CardContent>
         <PlacesStatus>No places found.</PlacesStatus>
       </CardContent>
-      <CardFooter>
-        <PlacesLink href="https://map.oregonstate.edu">
-          Campus Map
-          <Icon icon={faLongArrowRight} color={Color['orange-400']} />
-        </PlacesLink>
-      </CardFooter>
+      <PlacesFooter />
+    </Card>
+  );
+};
+
+const PlacesWaiting: React.FC = () => {
+  return (
+    <Card>
+      <PlacesTitle />
+      <CardContent>
+        <PlacesList>
+          <Place>
+            <PlaceSkelImage />
+            <PlaceSkelLink />
+          </Place>
+          <Place>
+            <PlaceSkelImage />
+            <PlaceSkelLink />
+          </Place>
+        </PlacesList>
+      </CardContent>
     </Card>
   );
 };
 
 const Places = ({ query }: { query: String }) => {
-  const [places, setPlaces] = useState<any>([]);
+  const [places, setPlaces] = useState<any>(null);
 
   useEffect(() => {
     request({
@@ -121,16 +192,15 @@ const Places = ({ query }: { query: String }) => {
       });
   }, [query]);
 
-  if (!places.length) {
+  if (places === null) {
+    return <PlacesWaiting />;
+  } else if (!places.length) {
     return <PlacesEmptyState />;
   }
 
   return (
     <Card>
-      <CardTitle>
-        <PlacesIcon icon={faMapMarkerAlt} color={Color['neutral-400']} />
-        Places
-      </CardTitle>
+      <PlacesTitle />
       <CardContent>
         <PlacesList>
           {places.map(place => {
@@ -142,13 +212,11 @@ const Places = ({ query }: { query: String }) => {
             );
           })}
         </PlacesList>
+        <PlacesTotal>
+          Showing {places.length < 5 ? places.length : 5} of {places.length}
+        </PlacesTotal>
       </CardContent>
-      <CardFooter>
-        <PlacesLink href="https://map.oregonstate.edu">
-          Campus Map
-          <Icon icon={faLongArrowRight} color={Color['orange-400']} />
-        </PlacesLink>
-      </CardFooter>
+      <PlacesFooter />
     </Card>
   );
 };

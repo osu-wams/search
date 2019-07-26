@@ -12,7 +12,7 @@ const TophatWrapper = styled.header`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 2rem;
+  padding: 0;
   justify-content: space-between;
   background-color: ${Color.white};
   @media screen and (min-width: ${breakpoints[768]}) {
@@ -21,11 +21,15 @@ const TophatWrapper = styled.header`
 `;
 
 const TophatLogo = styled.img`
-  height: 100%;
+  height: 80px;
+  width: 250px;
+  margin: 10px;
+  max-width: 100%;
+  vertical-align: middle;
 `;
 
 const StyledLink = styled.a`
-  height: 4.4rem;
+  text-decoration: none;
   margin-right: 3.6rem;
 `;
 
