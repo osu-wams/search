@@ -159,6 +159,7 @@ const PlacesWaiting: React.FC = () => {
 
 const Places = ({ query }: { query: String }) => {
   const [places, setPlaces] = useState<any>(null);
+  const [numResults, setNumResults] = useState<any>(0);
 
   useEffect(() => {
     request({
@@ -173,6 +174,7 @@ const Places = ({ query }: { query: String }) => {
           }
           return true;
         });
+        setNumResults(cleanedData.length);
         cleanedData = cleanedData
           .sort((a, b) => {
             let itemA = a.name.toUpperCase();
@@ -214,7 +216,7 @@ const Places = ({ query }: { query: String }) => {
           })}
         </PlacesList>
         <PlacesTotal>
-          Showing {places.length < 5 ? places.length : 5} of {places.length}
+          Showing {places.length < 5 ? places.length : 5} of {numResults}
         </PlacesTotal>
       </CardContent>
       <PlacesFooter />

@@ -160,6 +160,7 @@ const PeopleWaiting: React.FC = () => {
 
 const People = ({ query }: { query: String }) => {
   const [people, setPeople] = useState<any>(null);
+  const [numResults, setNumResults] = useState<any>(0);
 
   useEffect(() => {
     request({
@@ -168,6 +169,7 @@ const People = ({ query }: { query: String }) => {
       json: true
     })
       .then(data => {
+        setNumResults(data.length);
         let cleanedData = data
           .sort((a, b) => {
             let itemA = a.lastName.toUpperCase();
@@ -215,7 +217,7 @@ const People = ({ query }: { query: String }) => {
           })}
         </PeopleList>
         <PeopleTotal>
-          Showing {people.length < 5 ? people.length : 5} of {people.length}
+          Showing {people.length < 5 ? people.length : 5} of {numResults}
         </PeopleTotal>
       </CardContent>
       <PeopleFooter href={`http://directory.oregonstate.edu/?type=search&cn=${query}`} />
