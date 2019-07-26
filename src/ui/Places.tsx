@@ -189,6 +189,7 @@ const Places = ({ query }: { query: String }) => {
       })
       .catch(err => {
         console.log(err);
+        setPlaces([]);
       });
   }, [query]);
 
