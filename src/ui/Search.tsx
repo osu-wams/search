@@ -22,8 +22,6 @@ const Search: React.FC = () => {
     e.preventDefault();
     if (query !== '') {
       window.location.search = '?q=' + encodeURI(query);
-    } else {
-      window.location.search = '';
     }
   };
 
