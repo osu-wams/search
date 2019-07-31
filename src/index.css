@@ -28,3 +28,12 @@ body:not(.user-is-tabbing) textarea:focus {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.gsc-results .gsc-cursor-box .gsc-cursor-page {
+  color: #006a8e !important;
+  text-decoration: none !important;
+}
+
+.gsc-results .gsc-cursor-box .gsc-cursor-page.gsc-cursor-current-page {
+  color: #000 !important;
+}
