@@ -1,3 +1,7 @@
+OSU Search is an application designed for searching through OSU for various pages and other pieces of content related to Oregon State. It can also show people and places of OSU. It can be accessed at [search.oregonstate.edu](https://search.oregonstate.edu).
+
+This codebase is a serverless application model, meaning there is no "backend". To access third-party APIs and other endpoints requiring credentials, this application makes calls to AWS Lambda functions that do the work.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
