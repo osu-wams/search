@@ -74,6 +74,7 @@ const SearchBackground = styled.nav`
 `;
 
 const SearchText = styled.h2`
+  max-width: 100%;
   font-weight: 700;
   font-size: ${theme.fontSize[28]};
   color: ${Color.white};
