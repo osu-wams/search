@@ -1,56 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import {
-  faSearchLocation,
-  faLongArrowRight,
-  faMapMarkerAlt
-} from '@fortawesome/pro-light-svg-icons';
+import { faLongArrowRight, faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components';
 import request from 'request-promise';
 import { Color, theme } from '../theme';
 import Icon from './Icon';
-import { Card, CardSplit } from './Card';
+import { Card, CardTitle, CardContent, CardFooter } from './Card';
 import default_image from '../assets/images/default_place.png';
-
-const PlacesCard = styled(Card)`
-  padding: ${theme.spacing.unit * 2}px;
-`;
 
 const PlacesIcon = styled(Icon)`
   font-size: ${theme.fontSize[32]};
   margin-right: ${theme.spacing.unit}px;
 `;
 
-const PlacesTitle = styled.h2`
-  padding: 0;
-  font-weight: 300;
-  color: ${Color['neutral-550']};
-  font-size: ${theme.fontSize[18]};
-  margin: 0;
-`;
-
 const PlacesList = styled.ul`
   list-style-type: none;
   margin: 0;
-  margin-bottom: ${theme.spacing.unit}px;
   padding: 0;
-  padding-top: ${theme.spacing.unit}px;
   color: ${Color['neutral-700']};
-  font-size: ${theme.fontSize[16]};
   font-weight: 300;
 `;
 
 const Place = styled.li`
-  padding: ${theme.spacing.unit}px 0;
+  padding: 0;
+  padding-top: ${theme.spacing.unit * 2}px;
   display: flex;
   align-items: center;
 `;
 
+const PlacesStatus = styled.p`
+  color: ${Color['neutral-700']};
+  font-size: ${theme.fontSize[16]};
+  font-weight: 300;
+  margin: 0;
+  padding-top: ${theme.spacing.unit * 2}px;
+`;
+
 const PlaceLink = styled.a`
   color: ${Color.black};
+  font-size: ${theme.fontSize[16]};
   text-decoration: none;
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const PlaceSkelLink = styled(PlaceLink)`
+  @keyframes place-waiting {
+    from {
+      background-color: ${Color['neutral-100']};
+    }
+    to {
+      background-color: ${Color['neutral-200']};
+    }
+  }
+  background-color: ${Color['neutral-100']};
+  height: ${theme.fontSize[16]};
+  width: 60%;
+  margin: 4px 0;
+  animation: place-waiting 900ms 300ms infinite alternate;
 `;
 
 const PlacesLink = styled.a`
@@ -75,21 +82,84 @@ const PlaceImage = styled.img`
   margin-right: ${theme.spacing.unit}px;
 `;
 
-const PlacesEmptyState: React.FC = () => {
+const PlaceSkelImage = styled(PlaceImage).attrs({ as: 'div' })`
+  @keyframes place-waiting {
+    from {
+      background-color: ${Color['neutral-100']};
+    }
+    to {
+      background-color: ${Color['neutral-200']};
+    }
+  }
+  background-color: ${Color['neutral-100']};
+  animation: place-waiting 900ms 300ms infinite alternate;
+`;
+
+const PlacesTotal = styled.p`
+  margin: 0;
+  margin-top: ${theme.spacing.unit * 2 + 2}px;
+  padding: 0;
+  font-size: ${theme.fontSize[14]};
+  color: ${Color['neutral-550']};
+  font-style: italic;
+  font-weight: 300;
+`;
+
+const PlacesTitle: React.FC = () => {
   return (
-    <PlacesCard>
-      <PlacesIcon icon={faSearchLocation} color={Color['neutral-400']} />
-      <PlacesTitle>No places found.</PlacesTitle>
+    <CardTitle>
+      <PlacesIcon icon={faMapMarkerAlt} color={Color['neutral-400']} />
+      Places
+    </CardTitle>
+  );
+};
+
+const PlacesFooter = () => {
+  return (
+    <CardFooter>
       <PlacesLink href="https://map.oregonstate.edu">
-        Find buildings, parking and more on the campus map
+        Campus Map
         <Icon icon={faLongArrowRight} color={Color['orange-400']} />
       </PlacesLink>
-    </PlacesCard>
+    </CardFooter>
+  );
+};
+
+const PlacesEmptyState: React.FC = () => {
+  return (
+    <Card>
+      <PlacesTitle />
+      <CardContent>
+        <PlacesStatus>No places found.</PlacesStatus>
+      </CardContent>
+      <PlacesFooter />
+    </Card>
+  );
+};
+
+const PlacesWaiting: React.FC = () => {
+  return (
+    <Card>
+      <PlacesTitle />
+      <CardContent>
+        <PlacesList>
+          <Place>
+            <PlaceSkelImage />
+            <PlaceSkelLink />
+          </Place>
+          <Place>
+            <PlaceSkelImage />
+            <PlaceSkelLink />
+          </Place>
+        </PlacesList>
+      </CardContent>
+    </Card>
   );
 };
 
 const Places = ({ query }: { query: String }) => {
-  const [places, setPlaces] = useState<any>([]);
+  const [places, setPlaces] = useState<any>(null);
+  const [numResults, setNumResults] = useState<any>(0);
 
   useEffect(() => {
     request({
@@ -104,6 +174,7 @@ const Places = ({ query }: { query: String }) => {
           }
           return true;
         });
+        setNumResults(cleanedData.length);
         cleanedData = cleanedData
           .sort((a, b) => {
             let itemA = a.name.toUpperCase();
@@ -120,35 +191,36 @@ const Places = ({ query }: { query: String }) => {
       })
       .catch(err => {
         console.log(err);
+        setPlaces([]);
       });
   }, [query]);
 
-  if (!places.length) {
+  if (places === null) {
+    return <PlacesWaiting />;
+  } else if (!places.length) {
     return <PlacesEmptyState />;
   }
 
   return (
-    <PlacesCard>
-      <PlacesTitle>
-        <PlacesIcon icon={faMapMarkerAlt} color={Color['neutral-400']} />
-        Places
-      </PlacesTitle>
-      <CardSplit />
-      <PlacesList>
-        {places.map(place => {
-          return (
-            <Place key={place.id}>
-              <PlaceImage src={place.image === null ? default_image : place.image} />
-              <PlaceLink href={place.link}>{place.name}</PlaceLink>
-            </Place>
-          );
-        })}
-      </PlacesList>
-      <PlacesLink href="https://map.oregonstate.edu">
-        Campus Map
-        <Icon icon={faLongArrowRight} color={Color['orange-400']} />
-      </PlacesLink>
-    </PlacesCard>
+    <Card>
+      <PlacesTitle />
+      <CardContent>
+        <PlacesList>
+          {places.map(place => {
+            return (
+              <Place key={place.id}>
+                <PlaceImage src={place.image === null ? default_image : place.image} />
+                <PlaceLink href={place.link}>{place.name}</PlaceLink>
+              </Place>
+            );
+          })}
+        </PlacesList>
+        <PlacesTotal>
+          Showing {places.length < 5 ? places.length : 5} of {numResults}
+        </PlacesTotal>
+      </CardContent>
+      <PlacesFooter />
+    </Card>
   );
 };
 

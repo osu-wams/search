@@ -78,7 +78,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-
       - aws-s3/sync:
           from: ~/project/build
           to: ${AWS_S3_BUCKET_URL_DEV}
@@ -88,10 +87,18 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-
       - aws-s3/sync:
           from: ~/project/build
           to: ${AWS_S3_BUCKET_URL_PROD}
+
+  flush-cache:
+    executor: aws-cli/default
+    steps:
+      - aws-cli/install
+      - aws-cli/configure
+      - run:
+          name: Invalidate Index
+          command: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_DISTRIBUTION_ID} --paths /index.html
 
 workflows:
   build_test_deploy:
@@ -116,6 +123,14 @@ workflows:
             branches:
               ignore:
                 - master
+      - flush-cache:
+          requires:
+            - deploy-dev
+          context: search-dev
+          filters:
+            branches:
+              ignore:
+                - master
       - build-prod:
           requires:
             - lint-test-coverage
@@ -127,6 +142,14 @@ workflows:
       - deploy-prod:
           requires:
             - build-prod
+          context: search-prod
+          filters:
+            branches:
+              only:
+                - master
+      - flush-cache:
+          requires:
+            - deploy-prod
           context: search-prod
           filters:
             branches:

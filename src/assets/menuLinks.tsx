@@ -4,8 +4,7 @@ const menuLinks = {
     Academics: 'https://oregonstate.edu/academics',
     Research: 'https://oregonstate.edu/osuresearch',
     Outreach: 'https://outreach.oregonstate.edu',
-    Athletics: 'https://osubeavers.com',
-    OSU150: 'https://oregonstate.edu/osu150'
+    Athletics: 'https://osubeavers.com'
   }
 };
 
