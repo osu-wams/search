@@ -9,9 +9,9 @@ import { Color, breakpoints, theme } from '../theme';
 const SubmitForm = styled.form`
   box-sizing: border-box;
   width: 100%;
-  padding: ${theme.spacing.unit * 4}px ${theme.spacing.unit * 2}px;
+  padding: ${theme.spacing.unit * 4}px 0;
   @media screen and (min-width: ${breakpoints[768]}) {
-    width: 768px;
+    max-width: ${768 - theme.spacing.unit * 4}px;
   }
 `;
 

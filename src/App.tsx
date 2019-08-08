@@ -27,7 +27,6 @@ const ResultsPage = styled(Page)`
 `;
 
 const Content = styled.main`
-  box-sizing: border-box;
   width: 100%;
   height: 100%;
   display: flex;
@@ -40,12 +39,15 @@ const Content = styled.main`
   }
 `;
 
-const ResultsContent = styled(Content)`
+const ResultsContent = styled.main`
   display: grid;
+  width: 100%;
   height: 100%;
+  padding: ${theme.spacing.unit * 2}px;
   grid-template-columns: 1fr;
   grid-row-gap: ${theme.spacing.unit * 2}px;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: ${breakpoints[768]}) {
+    width: 768px;
     grid-template-columns: 2fr 1fr;
     grid-auto-rows: min-content;
     grid-column-gap: ${theme.spacing.unit * 2}px;
@@ -68,6 +70,7 @@ const SearchBackground = styled.nav`
   width: 100%;
   display: flex;
   justify-content: center;
+  padding: 0 ${theme.spacing.unit * 2}px;
 `;
 
 const SearchText = styled.h2`
