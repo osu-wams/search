@@ -21,7 +21,7 @@ const Search: React.FC = () => {
   const setUrl = (e: any) => {
     e.preventDefault();
     if (query !== '') {
-      window.location.search = '?q=' + encodeURI(query);
+      window.location.search = '?q=' + encodeURIComponent(query);
     }
   };
 

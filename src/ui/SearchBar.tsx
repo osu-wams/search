@@ -145,7 +145,10 @@ const SearchBar = (prop: any) => {
       setResults(true);
       const searchField = document.getElementById('searchfield');
       if (searchField !== null) {
-        (searchField as HTMLInputElement).value = decodeURI(window.location.search.substr(3));
+        // Only pull the first parameter, ignoring ?q=
+        (searchField as HTMLInputElement).value = decodeURIComponent(
+          window.location.search.substr(3).split('&')[0]
+        );
       }
     }
   }, []);
