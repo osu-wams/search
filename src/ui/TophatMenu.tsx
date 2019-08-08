@@ -9,6 +9,7 @@ import Media from 'react-media';
 const StyledMenuButton = styled(MenuButton)`
   border: none;
   background: none;
+  padding-right: 20px;
 `;
 
 const StyledMenuList = styled(MenuList)`
@@ -16,7 +17,7 @@ const StyledMenuList = styled(MenuList)`
   flex-direction: column;
   background-color: ${Color['white']};
   position: absolute;
-  top: 8.4rem;
+  top: 80px;
   bottom: 0;
   right: 0;
   width: 100%;

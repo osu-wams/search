@@ -21,11 +21,15 @@ const TophatWrapper = styled.header`
 `;
 
 const TophatLogo = styled.img`
-  height: 80px;
-  width: 250px;
+  width: 188px;
+  height: 60px;
   margin: 10px;
   max-width: 100%;
   vertical-align: middle;
+  @media screen and (min-width: ${breakpoints[768]}) {
+    width: 250px;
+    height: 80px;
+  }
 `;
 
 const StyledLink = styled.a`

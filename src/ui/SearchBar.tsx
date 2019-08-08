@@ -30,6 +30,18 @@ const SearchBarWrapper = styled.div`
 `;
 
 const SearchBarField = styled.input`
+  @keyframes autofill-grey {
+    to {
+      color: ${Color['neutral-550']};
+      background: transparent;
+    }
+  }
+  @keyframes autofill-white {
+    to {
+      color: ${Color.white};
+      background: transparent;
+    }
+  }
   height: 100%;
   font-size: ${theme.fontSize[24]};
   font-weight: 300;
@@ -42,6 +54,17 @@ const SearchBarField = styled.input`
   width: calc(100% - ${3 * (theme.spacing.unit * 3) + 24}px);
   &.results {
     color: ${Color.white};
+  }
+  input:-webkit-autofill&,
+  input:-webkit-autofill:focus& {
+    -webkit-animation-name: autofill-grey;
+    animation-name: autofill-grey;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+  input:-webkit-autofill&.results {
+    -webkit-animation-name: autofill-white;
+    animation-name: autofill-white;
   }
 `;
 
@@ -122,7 +145,10 @@ const SearchBar = (prop: any) => {
       setResults(true);
       const searchField = document.getElementById('searchfield');
       if (searchField !== null) {
-        (searchField as HTMLInputElement).value = decodeURI(window.location.search.substr(3));
+        // Only pull the first parameter, ignoring ?q=
+        (searchField as HTMLInputElement).value = decodeURIComponent(
+          window.location.search.substr(3).split('&')[0]
+        );
       }
     }
   }, []);

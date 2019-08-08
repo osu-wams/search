@@ -32,9 +32,9 @@ const FooterCopyright = styled.p`
 
 const FooterCopyrightLink = styled.a`
   color: ${Color.white};
-  text-decoration: none;
+  text-decoration: underline;
   &:hover {
-    text-decoration: underline;
+    text-decoration: none;
   }
 `;
 
