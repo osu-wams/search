@@ -46,9 +46,9 @@ const ResultsContent = styled.main`
   padding: ${theme.spacing.unit * 2}px;
   grid-template-columns: 1fr;
   grid-row-gap: ${theme.spacing.unit * 2}px;
-  @media screen and (min-width: ${breakpoints[768]}) {
-    width: 768px;
-    grid-template-columns: 2fr 1fr;
+  @media screen and (min-width: ${breakpoints[1024]}) {
+    width: 1024px;
+    grid-template-columns: auto ${theme.spacing.unit * 30}px;
     grid-auto-rows: min-content;
     grid-column-gap: ${theme.spacing.unit * 2}px;
     grid-auto-flow: dense;
