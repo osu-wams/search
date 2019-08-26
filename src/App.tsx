@@ -48,7 +48,7 @@ const ResultsContent = styled.main`
   grid-row-gap: ${theme.spacing.unit * 2}px;
   @media screen and (min-width: ${breakpoints[1024]}) {
     width: 1024px;
-  grid-template-columns: auto ${theme.spacing.unit * 30}px;
+    grid-template-columns: auto ${theme.spacing.unit * 30}px;
     grid-auto-rows: min-content;
     grid-column-gap: ${theme.spacing.unit * 2}px;
     grid-auto-flow: dense;
