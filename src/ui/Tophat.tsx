@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logo-white.svg';
 import { Color, breakpoints } from '../theme';
 import TophatMenu from './TophatMenu';
 import menuLinks from '../assets/menuLinks';
