@@ -1,16 +1,15 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Search from '../Search';
-
-afterEach(cleanup);
 
 describe('Search component exists and functions correctly', () => {
   it('should render without crashing', () => {
     const { getByTestId } = render(<Search />);
-    expect(getByTestId('search')).toBeInstanceOf(HTMLFormElement);
+    expect(getByTestId('search')).toBeInTheDocument();
   });
 
-  it('should set window.location.search to the new query', () => {
+  it('should set window.location.search to the new query', async () => {
     const { getByTestId } = render(<Search />);
     const search = getByTestId('search');
     const searchField = getByTestId('search-field');
@@ -25,11 +24,7 @@ describe('Search component exists and functions correctly', () => {
       value: location
     });
 
-    fireEvent.change(searchField, {
-      target: {
-        value: 'newValue'
-      }
-    });
+    await userEvent.type(searchField, 'newValue');
 
     fireEvent.submit(search);
 
