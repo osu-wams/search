@@ -1,61 +1,37 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import TophatMenu from '../TophatMenu';
+import { render } from '../../utils/test-utils';
 
-afterEach(cleanup);
-
-const setMatchMedia = match => {
-  window.matchMedia = jest.fn().mockImplementation(query => {
-    return {
-      matches: match,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn()
-    };
-  });
-};
+const menuItems = [
+  { name: 'testA', url: 'https://testing.com/A' },
+  { name: 'testB', url: 'https://testing.com/B' },
+  { name: 'testC', url: 'https://testing.com/C' }
+];
 
 describe('Hamburger menu exists', () => {
-  beforeAll(()=> setMatchMedia(false));
   it('should render a hamburger menu button', () => {
-    const { getByTestId } = render(<TophatMenu />);
-    expect(getByTestId('hamburger-menu')).toBeInstanceOf(HTMLButtonElement);
+    const { getByTestId } = render(<TophatMenu items={menuItems} />);
+    expect(getByTestId('hamburger-menu')).toBeInTheDocument();
   });
 
-  it('should render a list of 3 items: testA, testB, and testC', () => {
-    const { getByText, getByTestId } = render(
-      <TophatMenu
-        items={{
-          testA: 'https://testing.com/A',
-          testB: 'https://testing.com/B',
-          testC: 'https://testing.com/C'
-        }}
-      />
-    );
+  it('should render a list of 3 items: testA, testB, and testC', async () => {
+    const { findByText, getByTestId } = render(<TophatMenu items={menuItems} />);
 
-    fireEvent.click(getByTestId('hamburger-menu'));
-    expect(getByText('testA')).toBeInstanceOf(HTMLAnchorElement);
-    expect(getByText('testB')).toBeInstanceOf(HTMLAnchorElement);
-    expect(getByText('testC')).toBeInstanceOf(HTMLAnchorElement);
+    await userEvent.click(getByTestId('hamburger-menu'));
+
+    expect(await findByText('testA')).toBeVisible();
+    expect(await findByText('testB')).toBeVisible();
+    expect(await findByText('testC')).toBeVisible();
   });
 });
 
 describe('Desktop view menu exists', () => {
-  beforeAll(()=> setMatchMedia(true));
   it('should contain a list of 3 items: A, B, and C', () => {
-    const { getByText } = render(
-      <TophatMenu
-        items={{
-          testA: 'https://testing.com/A',
-          testB: 'https://testing.com/B',
-          testC: 'https://testing.com/C'
-        }}
-      />
-    );
+    const { getByText } = render(<TophatMenu items={menuItems} />, { isDesktop: true });
 
-    expect(getByText('testA')).not.toBeNull();
-    expect(getByText('testB')).not.toBeNull();
-    expect(getByText('testC')).not.toBeNull();
+    expect(getByText('testA')).toBeVisible();
+    expect(getByText('testB')).toBeVisible();
+    expect(getByText('testC')).toBeVisible();
   });
 });

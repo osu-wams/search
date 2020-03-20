@@ -37,3 +37,11 @@ code {
 .gsc-results .gsc-cursor-box .gsc-cursor-page.gsc-cursor-current-page {
   color: #000 !important;
 }
+
+/* Reach Menu overwrites */
+[data-reach-menu] {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  max-width: 480px;
+}

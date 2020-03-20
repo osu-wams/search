@@ -20,10 +20,9 @@ const Page = styled.div`
   background-color: ${Color['neutral-100']};
   background-repeat: no-repeat;
   background-size: cover;
-`;
-
-const ResultsPage = styled(Page)`
-  background-image: none;
+  &.results {
+    background-image: none;
+  }
 `;
 
 const Content = styled.main`
@@ -86,34 +85,44 @@ const SearchText = styled.h2`
   }
 `;
 
+const locationSearch = () => {
+  return window.location.search.startsWith('?q=');
+};
+
+const mainClasses = () => {
+  const app = 'App';
+  return locationSearch() ? `${app} results` : app;
+};
+
+// Landing Page Content
+const LandingPage: React.FC = () => (
+  <Content>
+    <SearchText>Find pages, people and places at Oregon State University</SearchText>
+    <Search />
+  </Content>
+);
+
+// Results page (primary way users experience the search)
+const ResultsPage: React.FC = () => (
+  <>
+    <SearchBackground>
+      <Search />
+    </SearchBackground>
+    <ResultsContent>
+      <Results />
+      <People query={decodeURI(window.location.search.substr(3))} />
+      <Places query={decodeURI(window.location.search.substr(3))} />
+    </ResultsContent>
+  </>
+);
+
 const App: React.FC = () => {
   return (
-    <>
-      {!window.location.search.startsWith('?q=') && (
-        <Page className="App">
-          <Tophat />
-          <Content>
-            <SearchText>Find pages, people and places at Oregon State University</SearchText>
-            <Search />
-          </Content>
-          <Footer />
-        </Page>
-      )}
-      {window.location.search.startsWith('?q=') && (
-        <ResultsPage className="App">
-          <Tophat />
-          <SearchBackground>
-            <Search />
-          </SearchBackground>
-          <ResultsContent>
-            <Results />
-            <People query={decodeURI(window.location.search.substr(3))} />
-            <Places query={decodeURI(window.location.search.substr(3))} />
-          </ResultsContent>
-          <Footer />
-        </ResultsPage>
-      )}
-    </>
+    <Page className={mainClasses()}>
+      <Tophat />
+      {locationSearch() ? <ResultsPage /> : <LandingPage />}
+      <Footer />
+    </Page>
   );
 };
 
