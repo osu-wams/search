@@ -10,17 +10,16 @@
     "@reach/menu-button": "^0.9.0",
     "aws-sdk": "^2.492.0",
     "core-js": "^3.1.4",
-    "react": "^16.13.0",
-    "react-app-polyfill": "^1.0.6",
-    "react-dom": "^16.13.0",
+    "react": "^17.0.1",
+    "react-app-polyfill": "^2.0.0",
+    "react-dom": "^17.0.1",
     "react-responsive": "^8.0.3",
-    "react-scripts": "3.4.0",
+    "react-scripts": "4.0.3",
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
-    "@sheerun/mutationobserver-shim": "^0.3.3",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^10.0.1",
     "@testing-library/user-event": "^10.0.0",
@@ -28,11 +27,11 @@
     "@types/node": "13.9.1",
     "@types/react": "16.9.23",
     "@types/react-dom": "16.9.5",
-    "@types/styled-components": "^5.0.1",
+    "@types/styled-components": "^5.1.8",
     "nock": "^10.0.6",
     "prettier": "^1.19.1",
-    "supertest": "^4.0.2",
-    "typescript": "3.8.3"
+    "supertest": "^6.1.3",
+    "typescript": "4.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
