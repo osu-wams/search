@@ -5,8 +5,6 @@ export const Card = styled.div`
   border-radius: ${theme.borderRadius};
   box-shadow: ${shadows[1]};
   background-color: ${Color.white};
-  overflow: hidden;
-  height: 100%;
 `;
 
 export const CardTitle = styled.div`
