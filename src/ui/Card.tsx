@@ -18,7 +18,7 @@ export const CardTitle = styled.div`
 
 export const CardContent = styled.div`
   padding: 0 ${theme.spacing.unit * 2}px;
-  padding-bottom: ${theme.spacing.unit * 4}px;
+  padding-bottom: ${theme.spacing.unit * 2}px;
 `;
 
 export const CardFooter = styled.div`
