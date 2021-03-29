@@ -5,8 +5,6 @@ export const Card = styled.div`
   border-radius: ${theme.borderRadius};
   box-shadow: ${shadows[1]};
   background-color: ${Color.white};
-  overflow: hidden;
-  height: 100%;
 `;
 
 export const CardTitle = styled.div`
@@ -20,7 +18,7 @@ export const CardTitle = styled.div`
 
 export const CardContent = styled.div`
   padding: 0 ${theme.spacing.unit * 2}px;
-  padding-bottom: ${theme.spacing.unit * 2}px;
+  padding-bottom: ${theme.spacing.unit * 4}px;
 `;
 
 export const CardFooter = styled.div`
