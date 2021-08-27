@@ -1,13 +1,12 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import SearchBar from '../SearchBar';
-
-afterEach(cleanup);
 
 describe('Search bar wrapper exists and functions correctly', () => {
   it('should render without crashing', () => {
     const { getByTestId } = render(<SearchBar />);
-    expect(getByTestId('search-bar')).toBeInstanceOf(HTMLDivElement);
+    expect(getByTestId('search-bar')).toBeInTheDocument();
   });
 
   it('should have the hovered class name', () => {
@@ -33,11 +32,7 @@ describe('Search bar wrapper exists and functions correctly', () => {
     const searchField = getByTestId('search-field');
     const searchBar = getByTestId('search-bar');
 
-    await fireEvent.change(searchField, {
-      target: {
-        value: 'new value'
-      }
-    });
+    await userEvent.type(searchField, 'new value');
 
     expect(searchBar.classList.contains('notEmpty')).toBeTruthy();
   });
@@ -45,7 +40,7 @@ describe('Search bar wrapper exists and functions correctly', () => {
 
 describe('Search bar label exists and functions correctly', () => {
   it('should render without crashing', () => {
-    const { getByText } = render(<SearchBar />);
-    expect(getByText('Search')).toBeInstanceOf(HTMLLabelElement);
+    const { getByLabelText } = render(<SearchBar />);
+    expect(getByLabelText('Search')).toBeInTheDocument();
   });
 });
