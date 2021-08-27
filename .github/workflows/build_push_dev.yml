@@ -20,6 +20,8 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           yarn run test
+        env:
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
   build:
     needs: test
     runs-on: ubuntu-latest
@@ -36,6 +38,8 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           yarn run build
+        env:
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
       - name: Copy client to S3 and flush Cloudfront cache for DEVELOPMENT
         run: |
           COMMIT_LINK=https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA
