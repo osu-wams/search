@@ -17,3 +17,5 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           yarn run test
+        env:
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
