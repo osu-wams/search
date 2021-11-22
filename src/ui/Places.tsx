@@ -6,6 +6,7 @@ import { Color, theme } from '../theme';
 import Icon from './Icon';
 import { Card, CardTitle, CardContent, CardFooter } from './Card';
 import default_image from '../assets/images/default_place.png';
+import { LAMBDA_API_URL } from '../constants';
 
 const PlacesIcon = styled(Icon)`
   font-size: ${theme.fontSize[32]};
@@ -164,7 +165,7 @@ const Places = ({ query }: { query: String }) => {
   useEffect(() => {
     request({
       method: 'GET',
-      url: `https://p2u4k1c842.execute-api.us-west-2.amazonaws.com/prod/locations?q=${query}`,
+      url: `${LAMBDA_API_URL}/locations?q=${query}`,
       json: true
     })
       .then(data => {
