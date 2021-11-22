@@ -5,6 +5,7 @@ import request from 'request-promise';
 import { Color, theme } from '../theme';
 import Icon from './Icon';
 import { Card, CardTitle, CardContent, CardFooter } from './Card';
+import { LAMBDA_API_URL } from '../constants';
 
 const PeopleIcon = styled(Icon)`
   font-size: ${theme.fontSize[32]};
@@ -165,7 +166,7 @@ const People = ({ query }: { query: String }) => {
   useEffect(() => {
     request({
       method: 'GET',
-      url: `https://p2u4k1c842.execute-api.us-west-2.amazonaws.com/prod/people?q=${query}`,
+      url: `${LAMBDA_API_URL}/people?q=${query}`,
       json: true
     })
       .then(data => {

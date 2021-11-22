@@ -1,68 +1,41 @@
 const AWS = require('aws-sdk');
 const request = require('request-promise');
 const uuidv1 = require('uuid/v1');
+const {
+  APIGEE_TOKEN_SECRET_NAME,
+  APIGEE_API_SECRET_NAME,
+  AWS_REGION,
+  APIGEE_TOKEN_LAMBDA_ROTATION_ARN,
+} = require('../constants');
 
+/* Secrets Manager Rotation Template
+
+This is a template for creating an AWS Secrets Manager rotation lambda
+
+Args:
+  event (object): Lambda object of event parameters. These keys must include the following:
+    - SecretId: The secret ARN or identifier
+    - ClientRequestToken: The ClientRequestToken of the secret version
+    - Step: The rotation step (one of createSecret, setSecret, testSecret, or finishSecret)
+
+  context (LambdaContext): The Lambda runtime information
+*/
 exports.handler = async (event, context) => {
-  /* Secrets Manager Rotation Template
-
-  This is a template for creating an AWS Secrets Manager rotation lambda
-
-  Args:
-    event (object): Lambda object of event parameters. These keys must include the following:
-      - SecretId: The secret ARN or identifier
-      - ClientRequestToken: The ClientRequestToken of the secret version
-      - Step: The rotation step (one of createSecret, setSecret, testSecret, or finishSecret)
-
-    context (LambdaContext): The Lambda runtime information
-  */
-  /*
-  const arn = event.SecretId;
-  const token = event.ClientRequestToken;
-  const step = event.Step;
-  */
-  const arn = 'arn:aws:secretsmanager:us-west-2:784417831348:secret:osusearch/apigeeToken-YYiuxe';
+  const arn = `arn:aws:secretsmanager:us-west-2:784417831348:secret:${APIGEE_TOKEN_SECRET_NAME}`;
   const token = uuidv1();
-  const region = 'us-west-2';
 
   // Setup the client
   const client = new AWS.SecretsManager({
-    region: region
+    region: AWS_REGION
   });
 
-  // Make sure the version is staged correctly
+  // check if secret exists and create it if it does not
+  await createSecret(client, arn, token);
   const metadata = await client.describeSecret({ SecretId: arn }).promise();
   if (!metadata.RotationEnabled) {
-    console.error(`Secret ${arn} is not enabled for rotation!`);
-    return;
-  }
-  /*
-  const versions = metadata.VersionIdsToStages;
-  if (!versions[token]) {
-    console.error(`Secret version ${token} has no stage for rotation of secret ${arn}.`);
-    return;
-  }
-  if (versions[token][0] === 'AWSCURRENT') {
-    console.error(`Secret version ${token} already set as AWSCURRENT for secret ${arn}.`);
-    return;
-  } else if (versions[token][0] !== 'AWSPENDING') {
-    console.error(`Secret version ${token} not set as AWSPENDING for rotation of secret ${arn}.`);
-    return;
+    enableRotation(client, arn);
   }
 
-  if (step === 'createSecret') {
-    await createSecret(client, arn, token);
-  } else if (step === 'setSecret') {
-    setSecret(client, arn, token);
-  } else if (step === 'testSecret') {
-    await testSecret(client, arn, token);
-  } else if (step === 'finishSecret') {
-    await finishSecret(client, arn, token);
-  } else {
-    console.error('Invalid step parameter');
-  }
-  */
-  // Make sure the current secret exists
-  await client.getSecretValue({ SecretId: arn, VersionStage: 'AWSCURRENT' }).promise();
   const data = await getToken();
   await client
     .updateSecret({ SecretId: arn, ClientRequestToken: token, SecretString: `{"Token":"${data}"}` })
@@ -70,71 +43,59 @@ exports.handler = async (event, context) => {
   await testSecret(client, arn, token);
 };
 
+/* Create the secret
+
+This method first checks for the existence of a secret for the passed in token. If one does not exist, it will generate a
+new secret and put it with the passed in token.
+
+Args:
+  client (client): The secrets manager service client
+  arn (string): The secret ARN or other identifier
+  token (string): The ClientRequestToken associated with the secret version
+*/
 const createSecret = async (client, arn, token) => {
-  /* Create the secret
-
-  This method first checks for the existence of a secret for the passed in token. If one does not exist, it will generate a
-  new secret and put it with the passed in token.
-
-  Args:
-    client (client): The secrets manager service client
-    arn (string): The secret ARN or other identifier
-    token (string): The ClientRequestToken associated with the secret version
-  */
-  // Make sure the current secret exists
-  await client.getSecretValue({ SecretId: arn, VersionStage: 'AWSCURRENT' }).promise();
-  // Now try to get the secret version, if that fails, put a new secret
   try {
-    await client.getSecretValue({ SecretId: arn, VersionStage: 'AWSPENDING' }).promise();
-  } catch (err) {
-    if (err.code === 'ResourceNotFoundException') {
-      // Generate a new password
-      const data = await getToken();
-      // Put the secret
-      await client
-        .putSecretValue({
-          SecretId: arn,
-          ClientRequestToken: token,
-          SecretString: `{"Token":"${data}"}`,
-          VersionStages: ['AWSPENDING']
-        })
-        .promise();
+    const { SecretList: secretList } = await client.listSecrets({
+      Filters: [
+        {
+          Key: 'name',
+          Values: [
+            APIGEE_TOKEN_SECRET_NAME
+          ]
+        },
+      ]
+    }).promise();
+    if (secretList.length === 0) {
+      await client.createSecret({ Name: APIGEE_TOKEN_SECRET_NAME }).promise();
+      enableRotation(client, arn);
       console.log(`createSecret: Successfully put secret for ARN ${arn} and version ${token}.`);
-    } else {
-      console.error(err);
-      return err;
     }
+  } catch (err) {
+    console.error(err);
+    return err;
   }
 };
 
-const setSecret = (client, arn, token) => {
-  /* Set the secret
+const enableRotation = async (client, arn) => {
+  await client.rotateSecret({
+    SecretId: arn,
+    RotationLambdaARN: APIGEE_TOKEN_LAMBDA_ROTATION_ARN,
+    RotationRules: { AutomaticallyAfterDays: 365 },
+  }).promise();
+}
 
-  This method should set the AWSPENDING secret in the service that the secret belongs to. For example, if the secret is a database
-  credential, this method should take the value of the AWSPENDING secret and set the user's password to this value in the database.
+/* Test the secret
 
-  Args:
-    client (client): The secrets manager service client
-    arn (string): The secret ARN or other identifier
-    token (string): The ClientRequestToken associated with the secret version
-  */
-  // This is where the secret should be set in the service
-  // For our use case, this function doesn't do anything
-  console.log(`setSecret: Successfully set secret for ARN ${arn} and version ${token}.`);
-};
+This method should validate that the AWSPENDING secret works in the service that the secret belongs to . For example, if the secret
+is a database credential, this method should validate that the user can login with the password in AWSPENDING and that the user has
+all of the expected permissions against the database.
 
+Args:
+  client (client): The secrets manager service client
+  arn (string): The secret ARN or other identifier
+  token (string): The ClientRequestToken associated with the secret version
+*/
 const testSecret = async (client, arn, token) => {
-  /* Test the secret
-
-  This method should validate that the AWSPENDING secret works in the service that the secret belongs to . For example, if the secret
-  is a database credential, this method should validate that the user can login with the password in AWSPENDING and that the user has
-  all of the expected permissions against the database.
-
-  Args:
-    client (client): The secrets manager service client
-    arn (string): The secret ARN or other identifier
-    token (string): The ClientRequestToken associated with the secret version
-  */
   // This is where the secret should be tested against the service
   const data = await client
     .getSecretValue({ SecretId: arn, VersionStage: 'AWSCURRENT' })
@@ -214,18 +175,17 @@ const getCreds = async () => {
   // If you need more information about configurations or implementing the sample code, visit the AWS docs:
   // https://aws.amazon.com/developers/getting-started/nodejs/
   const region = 'us-west-2';
-  const secretName = 'osusearch/apigeeApi';
 
   // Create a Secrets Manager client
   const client = new AWS.SecretsManager({
-    region: region
+    region: AWS_REGION
   });
 
   // In this sample we only handle the specific exceptions for the 'GetSecretValue' API.
   // See https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
   // We rethrow the exception by default.
   const data = await client
-    .getSecretValue({ SecretId: secretName })
+    .getSecretValue({ SecretId: APIGEE_API_SECRET_NAME })
     .promise()
     .catch(err => {
       logError(err);

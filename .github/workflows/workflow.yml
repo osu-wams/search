@@ -19,3 +19,4 @@ jobs:
           yarn run test
         env:
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          SKIP_PREFLIGHT_CHECK: true

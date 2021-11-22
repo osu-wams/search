@@ -8,7 +8,7 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 10
 
 Resources:
   CallApigeeApiFunction:
@@ -16,12 +16,17 @@ Resources:
     Properties:
       CodeUri: callApigeeApi/
       Handler: index.handler
-      Runtime: nodejs8.10
+      Runtime: nodejs10.x
       Events:
         Locations:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /locations
+            Method: get
+        People:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /people
             Method: get
 
 Outputs:
