@@ -4,6 +4,19 @@ This codebase is a serverless application model, meaning there is no "backend". 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Lambda Functions
+
+### First time deployment to AWS
+There is one manual step required when deploying to AWS for the FIRST time.<br>
+1. Deploy the lambda functions using `yarn deploy-lambda`
+2. In a browser navigate to the `updateApigeeToken` lambda function
+3. Go to Configuration -> Permissions -> Resource-based policy -> Add permission
+![Permissions options](/images/secret-manager-policy.png)
+4. Save and return to the Permissions configuration
+5. Click the link under `Execution Role` to view the functions role
+6. Attach a new policy with the following permissions
+![Permissions options](/images/secret-manager-permission.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
