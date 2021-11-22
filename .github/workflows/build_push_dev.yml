@@ -21,6 +21,7 @@ jobs:
           yarn install --frozen-lockfile
           yarn run test
         env:
+          SKIP_PREFLIGHT_CHECK: true
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
   build:
     needs: test
@@ -39,6 +40,7 @@ jobs:
           yarn install --frozen-lockfile
           yarn run build
         env:
+          SKIP_PREFLIGHT_CHECK: true
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
       - name: Copy client to S3 and flush Cloudfront cache for DEVELOPMENT
         run: |
