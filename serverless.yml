@@ -1,0 +1,61 @@
+service: osuSearch
+
+frameworkVersion: '2'
+useDotenv: true
+
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  region: us-west-2
+  eventBridge:
+    useCloudFormation: true
+  iam:
+    role:
+      statements: # permissions for all of your functions can be set here
+        - Effect: Allow
+          Action:
+            - secretsmanager:DescribeSecret
+            - secretsmanager:GetRandomPassword
+            - secretsmanager:GetSecretValue
+            - secretsmanager:PutSecretValue
+            - secretsmanager:UpdateSecretVersionStage
+            - secretsmanager:UpdateSecret
+            - secretsmanager:CreateSecret
+            - secretsmanager:ListSecrets
+            - secretsmanager:RotateSecret
+            - lambda:InvokeFunction
+          Resource: '*'
+
+functions:
+  callApigeeApi:
+    handler: ./lambdaFunctions/callApigeeApi/index.handler
+    events:
+      - http:
+          path: people
+          method: get
+          private: false
+          request:
+            parameters:
+              querystrings:
+                q: false
+      - http:
+          path: locations
+          method: get
+          private: false
+          request:
+            parameters:
+              querystrings:
+                q: false
+  updateApigeeToken:
+    handler: ./lambdaFunctions/updateApigeeToken/index.handler
+    events:
+      - eventBridge:
+          schedule: rate(23 hours)
+
+custom:
+  webpack:
+    includeModules: true

@@ -1,4 +1,5 @@
 const request = require('request-promise');
+const { APIGEE_TOKEN_SECRET_NAME, AWS_REGION } = require('../constants');
 
 /**
  *
@@ -80,19 +81,17 @@ const getToken = async () => {
   // https://aws.amazon.com/developers/getting-started/nodejs/
   // Load the AWS SDK
   const AWS = require('aws-sdk');
-  const region = 'us-west-2';
-  const secretName = 'osusearch/apigeeToken';
 
   // Create a Secrets Manager client
   const client = new AWS.SecretsManager({
-    region: region
+    region: AWS_REGION
   });
 
   // In this sample we only handle the specific exceptions for the 'GetSecretValue' API.
   // See https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
   // We rethrow the exception by default.
   const data = await client
-    .getSecretValue({ SecretId: secretName })
+    .getSecretValue({ SecretId: APIGEE_TOKEN_SECRET_NAME })
     .promise()
     .catch(err => {
       logError(err);
