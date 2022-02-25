@@ -20,8 +20,7 @@ exports.handler = async (event, context) => {
   const response = {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': event.headers.origin,
-      'Access-Control-Allow-Credentials': true,
+      'Access-Control-Allow-Origin': '*'
     },
     body: JSON.stringify(results)
   };
