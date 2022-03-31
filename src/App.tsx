@@ -94,6 +94,14 @@ const mainClasses = () => {
   return locationSearch() ? `${app} results` : app;
 };
 
+// Attach  gcse script to head later to prevent race condition between script and results div
+const loadGcseScript = () => {
+  const script = document.createElement("script");
+  script.src = "https://cse.google.com/cse.js?cx=001157565620839607635:f_5ovr-jasm";
+  script.async = true;
+  document.head.appendChild(script);
+}
+
 // Landing Page Content
 const LandingPage: React.FC = () => (
   <Content>
@@ -117,6 +125,7 @@ const ResultsPage: React.FC = () => (
 );
 
 const App: React.FC = () => {
+  loadGcseScript();
   return (
     <Page className={mainClasses()}>
       <Tophat />
