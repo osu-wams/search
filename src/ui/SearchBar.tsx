@@ -153,6 +153,16 @@ const SearchBar = (prop: any) => {
             .replace(/\+/g, '%20')
         );
       }
+    } else {
+      // Chrome autofill does NOT trigger onchange events by design
+      // wait a short time after render then check if chrome autofilled
+      setTimeout(() => {
+        const searchField = document.getElementById('searchfield') as HTMLInputElement;
+        if (searchField !== null && searchField.value !== '') {
+          setEmpty(false);
+          prop.setQuery(searchField.value);
+        }
+      }, 300);
     }
   }, []);
 
