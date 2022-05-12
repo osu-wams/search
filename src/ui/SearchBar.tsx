@@ -164,7 +164,7 @@ const SearchBar = (prop: any) => {
         }
       }, 300);
     }
-  }, []);
+  }, [prop]);
 
   return (
     <SearchBarWrapper
