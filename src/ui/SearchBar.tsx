@@ -164,7 +164,8 @@ const SearchBar = (prop: any) => {
         }
       }, 300);
     }
-  }, [prop]);
+  // eslint-disable-next-line
+  }, []);
 
   return (
     <SearchBarWrapper
