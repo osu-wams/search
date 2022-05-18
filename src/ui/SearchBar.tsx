@@ -164,7 +164,8 @@ const SearchBar = (prop: any) => {
         }
       }, 300);
     }
-  // eslint-disable-next-line
+    // not adding prop as dependency since we only want this running once
+    // eslint-disable-next-line
   }, []);
 
   return (
