@@ -55,7 +55,7 @@ const Footer = () => {
         <FooterCopyrightLink href="https://oregonstate.edu/copyright">
           Copyright
         </FooterCopyrightLink>{' '}
-        ©2023 Oregon State University
+        ©{new Date().getFullYear()} Oregon State University
       </FooterCopyright>
       <FooterCopyright>
         <FooterCopyrightLink href="https://oregonstate.edu/official-web-disclaimer">
