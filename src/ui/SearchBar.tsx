@@ -189,6 +189,7 @@ const SearchBar = (prop: any) => {
         data-testid="search-field"
         type="text"
         id="searchfield"
+        autoFocus
         onMouseOver={e => setHovered(true)}
         onMouseOut={e => setHovered(false)}
         onFocus={e => setFocused(true)}
