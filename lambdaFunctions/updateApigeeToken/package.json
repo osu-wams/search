@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.1034.0",
-    "axios": "^0.21.1",
+    "axios": "^1.6.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
   },
