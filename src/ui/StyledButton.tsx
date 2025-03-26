@@ -30,6 +30,6 @@ StyledButton.defaultProps = {
   theme: {
     results: false
   }
-};
+} as never;
 
 export default StyledButton;
