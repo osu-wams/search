@@ -131,7 +131,7 @@ SearchBarLabel.defaultProps = {
   theme: {
     results: false
   }
-};
+} as never;
 
 const SearchBar = (prop: any) => {
   const [hovered, setHovered] = useState(false);
