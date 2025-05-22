@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Search from './ui/Search';
 import Results from './features/Results';
 import People from './ui/People';
-import Places from './ui/Places';
 import Tophat from './ui/Tophat';
 import Footer from './ui/Footer';
 import { Color, breakpoints, theme } from './theme';
@@ -119,7 +118,6 @@ const ResultsPage: React.FC = () => (
     <ResultsContent>
       <Results />
       <People query={decodeURI(window.location.search.substr(3))} />
-      <Places query={decodeURI(window.location.search.substr(3))} />
     </ResultsContent>
   </>
 );
