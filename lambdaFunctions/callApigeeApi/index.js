@@ -1,4 +1,4 @@
-const request = require('request-promise');
+const { SecretsManagerClient, GetSecretValueCommand } = require('@aws-sdk/client-secrets-manager');
 const { APIGEE_TOKEN_SECRET_NAME, AWS_REGION } = require('../constants');
 
 /**
@@ -67,12 +67,14 @@ const requestedData = (items, dest) => {
 };
 
 const osuResults = async (auth, query, dest) => {
-  const apiResponse = await request({
-    method: 'GET',
-    url: `https://api.oregonstate.edu/v1/${dest}?q=${query.q}`,
-    auth: { bearer: auth },
-    json: true
-  });
+  const response = await fetch(
+    `https://api.oregonstate.edu/v1/${dest}?q=${encodeURIComponent(query.q)}`,
+    { headers: { Authorization: `Bearer ${auth}` } }
+  );
+  if (!response.ok) {
+    throw new Error(`OSU API request failed with status ${response.status}`);
+  }
+  const apiResponse = await response.json();
   return requestedData(apiResponse.data, dest);
 };
 
@@ -80,11 +82,8 @@ const getToken = async () => {
   // Use this code snippet in your app.
   // If you need more information about configurations or implementing the sample code, visit the AWS docs:
   // https://aws.amazon.com/developers/getting-started/nodejs/
-  // Load the AWS SDK
-  const AWS = require('aws-sdk');
-
   // Create a Secrets Manager client
-  const client = new AWS.SecretsManager({
+  const client = new SecretsManagerClient({
     region: AWS_REGION
   });
 
@@ -92,8 +91,7 @@ const getToken = async () => {
   // See https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
   // We rethrow the exception by default.
   const data = await client
-    .getSecretValue({ SecretId: APIGEE_TOKEN_SECRET_NAME })
-    .promise()
+    .send(new GetSecretValueCommand({ SecretId: APIGEE_TOKEN_SECRET_NAME }))
     .catch(err => {
       logError(err);
       throw err;
@@ -101,36 +99,37 @@ const getToken = async () => {
   if (data.SecretString) {
     return JSON.parse(data.SecretString).Token;
   }
-  const buff = new Buffer(data.SecretBinary, 'base64');
+  // SecretBinary is returned already decoded, as a Uint8Array
+  const buff = Buffer.from(data.SecretBinary);
   return JSON.parse(buff.toString('ascii')).Token;
 };
 
 const logError = err => {
-  if (err.code === 'DecryptionFailureException') {
-    console.error('Failed with DecryptionFailureException');
+  if (err.name === 'DecryptionFailure') {
+    console.error('Failed with DecryptionFailure');
     console.error(
       "Secrets Manager can't decrypt the protected secret text using the provided KMS key."
     );
     // Deal with the exception here, and/or rethrow at your discretion.
-  } else if (err.code === 'InternalServiceErrorException') {
-    console.error('Failed with InternalServiceErrorException');
+  } else if (err.name === 'InternalServiceError') {
+    console.error('Failed with InternalServiceError');
     console.error('An error occurred on the server side.');
     // Deal with the exception here, and/or rethrow at your discretion.
-  } else if (err.code === 'InvalidParameterException') {
+  } else if (err.name === 'InvalidParameterException') {
     console.error('Failed with InvalidParameterException');
     console.error('You provided an invalid value for a parameter.');
     // Deal with the exception here, and/or rethrow at your discretion.
-  } else if (err.code === 'InvalidRequestException') {
+  } else if (err.name === 'InvalidRequestException') {
     console.error('Failed with InvalidRequestException');
     console.error(
       'You provided a parameter value that is not valid for the current state of the resource.'
     );
     // Deal with the exception here, and/or rethrow at your discretion.
-  } else if (err.code === 'ResourceNotFoundException') {
+  } else if (err.name === 'ResourceNotFoundException') {
     console.error('Failed with ResourceNotFoundException');
     console.error("We can't find the resource that you asked for.");
     // Deal with the exception here, and/or rethrow at your discretion.
   } else {
-    console.error(`Unrecognized error: ${err.code}`);
+    console.error(`Unrecognized error: ${err.name}`);
   }
 };

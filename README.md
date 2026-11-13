@@ -2,7 +2,15 @@ OSU Search is an application designed for searching through OSU for various page
 
 This codebase is a serverless application model, meaning there is no "backend". To access third-party APIs and other endpoints requiring credentials, this application makes calls to AWS Lambda functions that do the work.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The front end is built with [Vite](https://vite.dev) and tested with [Vitest](https://vitest.dev).
+
+## Requirements
+
+- Node.js 26 (see `.nvmrc`; run `nvm use`)
+- Yarn 1
+- A `FONTAWESOME_TOKEN` environment variable for installing the Font Awesome Pro packages
+
+The Lambda functions are deployed with [osls](https://github.com/oss-serverless/osls), the open-source continuation of Serverless Framework v3, and run on the `nodejs26.x` runtime.
 
 ## Lambda Functions
 
@@ -26,26 +34,21 @@ In the project directory, you can run:
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+The page will reload if you make edits.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the test runner in the interactive watch mode. In CI it runs once and exits.
 
 ### `yarn run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Type-checks the project, then builds the app for production to the `build` folder.
 
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can learn more in the [Vite documentation](https://vite.dev/guide/).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To learn React, check out the [React documentation](https://react.dev/).

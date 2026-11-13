@@ -1,3 +1,3 @@
-const ENV = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+const ENV = import.meta.env.PROD ? 'prod' : 'dev';
 
 export { ENV };

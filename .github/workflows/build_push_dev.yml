@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [26.x]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v7
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
       - name: yarn install, test
@@ -21,18 +21,17 @@ jobs:
           yarn install --frozen-lockfile
           yarn run test
         env:
-          SKIP_PREFLIGHT_CHECK: true
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
   build:
     needs: test
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [26.x]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v7
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
       - name: Build client
@@ -40,7 +39,6 @@ jobs:
           yarn install --frozen-lockfile
           yarn run build
         env:
-          SKIP_PREFLIGHT_CHECK: true
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
       - name: Copy client to S3 and flush Cloudfront cache for DEVELOPMENT
         run: |

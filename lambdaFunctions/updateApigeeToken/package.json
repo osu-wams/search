@@ -10,19 +10,20 @@
   "author": "SAM CLI",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.1034.0",
-    "axios": "^0.21.1",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "@aws-sdk/client-secrets-manager": "^3.1167.0"
   },
   "scripts": {
     "test": "mocha tests/unit/"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^9.2.2"
+    "chai": "^6.3.0",
+    "mocha": "^12.0.3"
   },
   "directories": {
     "test": "tests"
+  },
+  "resolutions": {
+    "glob": "^14.0.2",
+    "minimatch": "^11.0.1"
   }
 }

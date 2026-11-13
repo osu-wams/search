@@ -1,6 +1,6 @@
 service: osuSearch
 
-frameworkVersion: '3'
+frameworkVersion: '4'
 useDotenv: true
 
 plugins:
@@ -8,11 +8,8 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs14.x
-  lambdaHashingVersion: 20201221
+  runtime: nodejs26.x
   region: us-west-2
-  eventBridge:
-    useCloudFormation: true
   iam:
     role:
       statements: # permissions for all of your functions can be set here
@@ -59,3 +56,4 @@ functions:
 custom:
   webpack:
     includeModules: true
+    packager: yarn
