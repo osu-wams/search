@@ -18,7 +18,7 @@ This is a sample template for sam-app - Below is a brief explanation of what we 
 ## Requirements
 
 * AWS CLI already configured with Administrator permission
-* [NodeJS 8.10+ installed](https://nodejs.org/en/download/releases/)
+* [NodeJS 26 installed](https://nodejs.org/en/download/releases/)
 
 * [Docker installed](https://www.docker.com/community-edition)
 

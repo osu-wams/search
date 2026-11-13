@@ -1,8 +1,11 @@
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom/vitest';
+import { cleanup } from '@testing-library/react';
 
 afterEach(() => {
-  // don't output debug statements to console
-  jest.spyOn(console, 'debug').mockImplementation(() => {});
+  cleanup();
 
-  jest.clearAllMocks();
+  // don't output debug statements to console
+  vi.spyOn(console, 'debug').mockImplementation(() => {});
+
+  vi.clearAllMocks();
 });

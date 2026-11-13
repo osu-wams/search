@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { faLongArrowRight, faUserCircle } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components';
-import request from 'request-promise';
 import { Color, theme } from '../theme';
 import Icon from './Icon';
 import { Card, CardTitle, CardContent, CardFooter } from './Card';
@@ -164,11 +163,13 @@ const People = ({ query }: { query: String }) => {
   const [numResults, setNumResults] = useState<any>(0);
 
   useEffect(() => {
-    request({
-      method: 'GET',
-      url: `${LAMBDA_API_URL}/people?q=${query}`,
-      json: true
-    })
+    fetch(`${LAMBDA_API_URL}/people?q=${query}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         setNumResults(data.length);
         let cleanedData = data
