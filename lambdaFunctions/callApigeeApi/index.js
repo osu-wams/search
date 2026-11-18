@@ -66,12 +66,37 @@ const requestedData = (items, dest) => {
   });
 };
 
+// OSU retired /v1/directory; the directory API is only served from /v2, which
+// replaced the free-text `q` parameter with JSON:API style filters.
+const buildUrl = (dest, q) => {
+  const base = 'https://api.oregonstate.edu';
+  if (dest === 'directory') {
+    const params = new URLSearchParams({
+      'filter[fullName][fuzzy]': q,
+      // default page size is 25; the client shows a total count, so ask for the maximum
+      'page[size]': '500',
+    });
+    return `${base}/v2/directory?${params}`;
+  }
+  return `${base}/v1/${dest}?q=${encodeURIComponent(q)}`;
+};
+
 const osuResults = async (auth, query, dest) => {
-  const response = await fetch(
-    `https://api.oregonstate.edu/v1/${dest}?q=${encodeURIComponent(query.q)}`,
-    { headers: { Authorization: `Bearer ${auth}` } }
-  );
+  const q = query && query.q;
+  if (dest === 'directory' && !q) {
+    // v2 rejects a directory search with no filter
+    return [];
+  }
+  const response = await fetch(buildUrl(dest, q), {
+    headers: { Authorization: `Bearer ${auth}` },
+  });
   if (!response.ok) {
+    const body = await response.text();
+    console.error(`OSU API ${dest} request failed with status ${response.status}: ${body}`);
+    if (dest === 'directory' && response.status === 400) {
+      // v2 answers 400 when a search is too broad or times out; treat it as no matches
+      return [];
+    }
     throw new Error(`OSU API request failed with status ${response.status}`);
   }
   const apiResponse = await response.json();
