@@ -174,8 +174,8 @@ const People = ({ query }: { query: String }) => {
         setNumResults(data.length);
         let cleanedData = data
           .sort((a, b) => {
-            let itemA = a.lastName.toUpperCase();
-            let itemB = b.lastName.toUpperCase();
+            let itemA = (a.lastName || '').toUpperCase();
+            let itemB = (b.lastName || '').toUpperCase();
             if (itemA < itemB) {
               return -1;
             } else if (itemA > itemB) {
